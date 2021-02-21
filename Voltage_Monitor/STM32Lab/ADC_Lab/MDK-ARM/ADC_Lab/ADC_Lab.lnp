@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"adc_lab\startup_stm32f103xe.o"
+"adc_lab\main.o"
+"adc_lab\stm32f1xx_it.o"
+"adc_lab\stm32f1xx_hal_msp.o"
+"adc_lab\stm32f1xx_hal_gpio_ex.o"
+"adc_lab\stm32f1xx_hal_adc.o"
+"adc_lab\stm32f1xx_hal_adc_ex.o"
+"adc_lab\stm32f1xx_hal.o"
+"adc_lab\stm32f1xx_hal_rcc.o"
+"adc_lab\stm32f1xx_hal_rcc_ex.o"
+"adc_lab\stm32f1xx_hal_gpio.o"
+"adc_lab\stm32f1xx_hal_dma.o"
+"adc_lab\stm32f1xx_hal_cortex.o"
+"adc_lab\stm32f1xx_hal_pwr.o"
+"adc_lab\stm32f1xx_hal_flash.o"
+"adc_lab\stm32f1xx_hal_flash_ex.o"
+"adc_lab\stm32f1xx_hal_exti.o"
+"adc_lab\stm32f1xx_hal_tim.o"
+"adc_lab\stm32f1xx_hal_tim_ex.o"
+"adc_lab\stm32f1xx_hal_uart.o"
+"adc_lab\system_stm32f1xx.o"
+"adc_lab\adc_demo.o"
+--library_type=microlib --strict --scatter "ADC_Lab\ADC_Lab.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "ADC_Lab.map" -o ADC_Lab\ADC_Lab.axf
