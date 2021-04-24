@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-04-24T13:22:22.488Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36" etag="5tzF0qVUWqBS7sTpxj5V" version="14.6.1" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2021-04-24T13:45:31.721Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36" etag="pDsluvjMtXVlIy1bgNm1" version="14.6.1" type="github" pages="2">
   <diagram name="Page-1" id="e7e014a7-5840-1c2e-5031-d8a46d1fe8dd">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="#ffffff" math="0" shadow="0">
       <root>
@@ -155,7 +155,7 @@
           <mxGeometry x="80" y="360" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-3" value="ADC Monitor System" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
-          <mxGeometry x="220" y="112.5" width="400" height="747.5" as="geometry" />
+          <mxGeometry x="220" y="112.5" width="400" height="417.5" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-36" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-4" target="orABig16eXodHMXE9kTw-35">
           <mxGeometry relative="1" as="geometry" />
@@ -163,17 +163,8 @@
         <mxCell id="orABig16eXodHMXE9kTw-4" value="Connection" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
           <mxGeometry x="360" y="170" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-5" value="Disconnection" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
-          <mxGeometry x="360" y="280" width="120" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-6" value="Start" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
-          <mxGeometry x="360" y="390" width="120" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-7" value="Stop" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
-          <mxGeometry x="360" y="505" width="120" height="80" as="geometry" />
-        </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-8" value="Graphic Monitor&amp;nbsp;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
-          <mxGeometry x="360" y="620" width="120" height="80" as="geometry" />
+          <mxGeometry x="360" y="290" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-9" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-2" target="orABig16eXodHMXE9kTw-4">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -181,28 +172,10 @@
             <mxPoint x="220" y="320" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-2" target="orABig16eXodHMXE9kTw-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-11" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-2" target="orABig16eXodHMXE9kTw-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-12" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-2" target="orABig16eXodHMXE9kTw-7">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-13" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-2" target="orABig16eXodHMXE9kTw-8">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-28" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-27" target="orABig16eXodHMXE9kTw-4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-29" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-27" target="orABig16eXodHMXE9kTw-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-30" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-27" target="orABig16eXodHMXE9kTw-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-31" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-27" target="orABig16eXodHMXE9kTw-7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-32" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-27" target="orABig16eXodHMXE9kTw-8">
@@ -215,16 +188,7 @@
           <mxGeometry x="770" y="280" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-33" value="Debug Tools" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
-          <mxGeometry x="360" y="740" width="120" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-37" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-35" target="orABig16eXodHMXE9kTw-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-38" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-35" target="orABig16eXodHMXE9kTw-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="orABig16eXodHMXE9kTw-39" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-35" target="orABig16eXodHMXE9kTw-7">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry x="360" y="410" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="orABig16eXodHMXE9kTw-40" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="orABig16eXodHMXE9kTw-1" source="orABig16eXodHMXE9kTw-35" target="orABig16eXodHMXE9kTw-8">
           <mxGeometry relative="1" as="geometry" />
