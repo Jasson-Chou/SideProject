@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-04-24T13:50:43.391Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36" etag="sMZitL2OGH5_fgC-dcod" version="14.6.1" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2021-04-24T13:52:24.862Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36" etag="iusKqKvQDRJLPxhbnWRQ" version="14.6.1" type="github" pages="3">
   <diagram name="Page-1" id="e7e014a7-5840-1c2e-5031-d8a46d1fe8dd">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="#ffffff" math="0" shadow="0">
       <root>
@@ -199,6 +199,14 @@
         <mxCell id="orABig16eXodHMXE9kTw-35" value="MCU" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="orABig16eXodHMXE9kTw-1">
           <mxGeometry x="690" y="380" width="30" height="60" as="geometry" />
         </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="gFCPZOItUUgQRMb8XliB" name="GUI">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="fKp1IJsYQAeDasL0WykP-0" />
+        <mxCell id="fKp1IJsYQAeDasL0WykP-1" parent="fKp1IJsYQAeDasL0WykP-0" />
       </root>
     </mxGraphModel>
   </diagram>
