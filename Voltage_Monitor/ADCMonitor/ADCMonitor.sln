@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADCMonitor", "ADCMonitor\ADCMonitor.csproj", "{9FAFCB9D-9C73-4612-8E59-49D6C390E802}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{71EC810F-D2D8-4EAC-993F-129896A93DE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUIWaveform", "Lib\WaveformDrawingContext\GUIWaveform.csproj", "{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FAFCB9D-9C73-4612-8E59-49D6C390E802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FAFCB9D-9C73-4612-8E59-49D6C390E802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FAFCB9D-9C73-4612-8E59-49D6C390E802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FAFCB9D-9C73-4612-8E59-49D6C390E802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02} = {71EC810F-D2D8-4EAC-993F-129896A93DE7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F44E6CFA-AE16-4934-B292-5E039812B1A7}
+	EndGlobalSection
+EndGlobal
