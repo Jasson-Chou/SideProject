@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{9FE7A8BC-4A4F-4F30-A91D-51631C36EF93}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeOutput>Post.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeBuildCommandLine>copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.pdb" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe.config" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.pdb" "$(SolutionDir)Application\"</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.pdb" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe.config" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.pdb" "$(SolutionDir)Application\"</NMakeReBuildCommandLine>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NMakeOutput>Post.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeBuildCommandLine>copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Configs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.pdb" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\GlobalPath\bin\$(Configuration)\GlobalPath.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\GlobalPath\bin\$(Configuration)\GlobalPath.pdb" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\CommonServiceLocator.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\GalaSoft.MvvmLight.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\GalaSoft.MvvmLight.Extras.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\GalaSoft.MvvmLight.Platform.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\System.Windows.Interactivity.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe.config" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.pdb" "$(SolutionDir)Application\"</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Configs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.pdb" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\GlobalPath\bin\$(Configuration)\GlobalPath.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)Lib\GlobalPath\bin\$(Configuration)\GlobalPath.pdb" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\CommonServiceLocator.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\GalaSoft.MvvmLight.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\GalaSoft.MvvmLight.Extras.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\GalaSoft.MvvmLight.Platform.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\System.Windows.Interactivity.dll" "$(SolutionDir)Application\Libs"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe.config" "$(SolutionDir)Application\"
+copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.pdb" "$(SolutionDir)Application\"</NMakeReBuildCommandLine>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeOutput>Post.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NMakeOutput>Post.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

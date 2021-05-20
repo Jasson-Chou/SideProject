@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9FAFCB9D-9C73-4612-8E59-49D6C390E802}</ProjectGuid>
+    <ProjectGuid>{FFB03755-C53A-4570-B249-93B190A3C6EB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ADCMonitor</RootNamespace>
-    <AssemblyName>ADCMonitor</AssemblyName>
+    <RootNamespace>QuestionnaireSort</RootNamespace>
+    <AssemblyName>QuestionnaireSort</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -24,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\SortManager.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -115,19 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ADCMonitor.csproj.user" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lib\GlobalPath\GlobalPath.csproj">
-      <Project>{87530970-dc40-4c99-b802-ee48c23e22ad}</Project>
-      <Name>GlobalPath</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\WaveformDrawingContext\GUIWaveform.csproj">
-      <Project>{a25febd7-980a-47a9-ab5e-1f7b8b55ac02}</Project>
-      <Name>GUIWaveform</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

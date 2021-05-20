@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A25FEBD7-980A-47A9-AB5E-1F7B8B55AC02}</ProjectGuid>
+    <ProjectGuid>{87530970-DC40-4C99-B802-EE48C23E22AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GUIWaveform</RootNamespace>
-    <AssemblyName>GUIWaveform</AssemblyName>
+    <RootNamespace>GlobalPath</RootNamespace>
+    <AssemblyName>GlobalPath</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,10 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,23 +39,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationManager.cs" />
-    <Compile Include="DrawingConfiguration.cs" />
-    <Compile Include="DrawingWaveformContext.cs" />
+    <Compile Include="SystemDirBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VoltageItem.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GUIWaveform.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GlobalPath\GlobalPath.csproj">
-      <Project>{87530970-dc40-4c99-b802-ee48c23e22ad}</Project>
-      <Name>GlobalPath</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

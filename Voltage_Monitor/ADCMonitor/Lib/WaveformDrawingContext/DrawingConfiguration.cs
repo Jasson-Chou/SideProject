@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using GlobalPath;
 
 namespace GUIWaveform
 {
     public class DrawingConfiguration
     {
+        private ConfigurationManager ConfigurationManager { get; }
         public DrawingConfiguration()
         {
-            if(!Load())
-            {
-                Debug.Write($"Initialize {nameof(DrawingConfiguration)} Exception ");
-            }
+            ConfigurationManager = new ConfigurationManager(SystemFolderFileName.GUIWaveformConfiguration);
+            Load();
         }
 
         public double MH { get; set; }
@@ -50,12 +49,7 @@ namespace GUIWaveform
         {
             try
             {
-                ConfigurationManager.AppSettings.Set(nameof(VBW), VBW.ToString());
-                ConfigurationManager.AppSettings.Set(nameof(TBH), TBH.ToString());
-                ConfigurationManager.AppSettings.Set(nameof(VBW), VBW.ToString());
-                ConfigurationManager.AppSettings.Set(nameof(TUP), TUP.ToString());
-                ConfigurationManager.AppSettings.Set(nameof(xdpi), xdpi.ToString());
-                ConfigurationManager.AppSettings.Set(nameof(ydpi), ydpi.ToString());
+                
             }
             catch(Exception ex)
             {
@@ -65,20 +59,21 @@ namespace GUIWaveform
             return true;
         }
 
-        public bool Load()
+        private bool Load()
         {
             try
             {
-                VBW = double.TryParse(ConfigurationManager.AppSettings.Get(nameof(VBW)), out double _VBW) ? _VBW : throw new Exception($"{nameof(VBW)} Parseing Error");
-                TBH = double.TryParse(ConfigurationManager.AppSettings.Get(nameof(TBH)), out double _TBH) ? _TBH : throw new Exception($"{nameof(TBH)} Parseing Error");
-                ZVH = double.TryParse(ConfigurationManager.AppSettings.Get(nameof(ZVH)), out double _ZVH) ? _ZVH : throw new Exception($"{nameof(ZVH)} Parseing Error");
-                TUP = double.TryParse(ConfigurationManager.AppSettings.Get(nameof(TUP)), out double _TUP) ? _TUP : throw new Exception($"{nameof(TUP)} Parseing Error");
-                xdpi = double.TryParse(ConfigurationManager.AppSettings.Get(nameof(xdpi)), out double _xdpi) ? _xdpi : throw new Exception($"{nameof(xdpi)} Parseing Error");
-                ydpi = double.TryParse(ConfigurationManager.AppSettings.Get(nameof(ydpi)), out double _ydpi) ? _ydpi : throw new Exception($"{nameof(ydpi)} Parseing Error");
+                VBW = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(VBW)), out double _VBW) ? _VBW : throw new Exception($"{nameof(VBW)} Parseing Error");
+                TBH = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(TBH)), out double _TBH) ? _TBH : throw new Exception($"{nameof(TBH)} Parseing Error");
+                ZVH = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(ZVH)), out double _ZVH) ? _ZVH : throw new Exception($"{nameof(ZVH)} Parseing Error");
+                TUP = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(TUP)), out double _TUP) ? _TUP : throw new Exception($"{nameof(TUP)} Parseing Error");
+                xdpi = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(xdpi)), out double _xdpi) ? _xdpi : throw new Exception($"{nameof(xdpi)} Parseing Error");
+                ydpi = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(ydpi)), out double _ydpi) ? _ydpi : throw new Exception($"{nameof(ydpi)} Parseing Error");
             }
             catch (Exception ex)
             {
-                Debug.Write(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+                Debug.WriteLine(ex.Message);
                 return false;
             }
             return true;
