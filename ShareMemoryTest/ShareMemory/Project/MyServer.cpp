@@ -2,12 +2,15 @@
 //
 
 #include <ShareMemoryHeader.h>
+#include <time.h>
 
 #if _DEBUG
 #define _ClientPath "start /d E:\\SideProject\\ShareMemoryTest\\ShareMemory\\Debug MyClient.exe"
 #else
 #define _ClientPath "start /d E:\\SideProject\\ShareMemoryTest\\ShareMemory\\Release MyClient.exe"
 #endif
+
+
 
 int main()
 {
@@ -73,6 +76,9 @@ int main()
 
 	printf_s("Connect with Client! \r\n");
 
+	double START, END; START = clock();
+	unsigned int dataCnt = 0;
+
 	while (myDataStruct->Status == _Status_Connecting)
 	{
 		switch (myDataStruct->Sending)
@@ -80,16 +86,21 @@ int main()
 			case _ClientSending:// Has Data From Client
 			{
 				//To Do...
+#if OutputConsole
 				printf_s("Recieve Data : { %s }\r\n", (char*)myDataStruct->Datas);
-
+#endif
 				//Clear Buff
 				memset(myDataStruct->Datas, 0, sizeof(myDataStruct->Datas));
+
+				dataCnt++;
 
 				myDataStruct->Sending = _UnSend;
 			}
 			break;
 		}
 	}
+
+	END = clock();
 
 	//Close Server
 	if(UnmapViewOfFile(pBuf))
@@ -104,6 +115,12 @@ int main()
 
 
 	printf_s("Server Closed !\r\n");
+
+	double spendTime = (END - START) / CLOCKS_PER_SEC;
+	printf_s("------------------------------------------------------------\r\n");
+	printf_s("Total Spend Time : %.10f Second!\r\n" , spendTime);
+	printf_s("Per Data Spend Time : %.10f Second!\r\n" , spendTime / dataCnt);
+
 	getchar();
 
 	return 0;

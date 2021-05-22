@@ -2,6 +2,7 @@
 //
 
 #include <ShareMemoryHeader.h>
+#include <time.h>
 int main()
 {
 	printf_s("My Server Initializing ... \r\n");
@@ -61,14 +62,19 @@ int main()
 
 	Sleep(200);
 
+	double START, END; START = clock();
+	unsigned int DataSize = 1e4;
+
 	printf_s("Start Send Datas ! \r\n");
 
-	for (int i = 0; i < 1e4 && myDataStruct->Status == _Status_Connecting; i++)
+	for (int i = 0; i < DataSize && myDataStruct->Status == _Status_Connecting; i++)
 	{
 		char str[100];
 		sprintf_s(str, sizeof(str), "Test Data Num : %d", i);
+#if OutputConsole
 		printf_s(str);
 		printf_s("\r\n");
+#endif
 		memcpy_s(myDataStruct->Datas, sizeof(myDataStruct->Datas), str, sizeof(str));
 		
 		myDataStruct->Sending = _ClientSending;
@@ -76,11 +82,19 @@ int main()
 		while (myDataStruct->Sending == _ClientSending);
 	}
 
+	END = clock();
+
 	//Disconnect with Server
 	myDataStruct->Status = _Status_AskDisconnectServer;
 	CloseHandle(handleFile);
 
 	printf_s("Close Client ! \r\n");
+
+	double spendTime = (END - START) / (double)CLOCKS_PER_SEC;
+	printf_s("------------------------------------------------------------\r\n");
+	printf_s("Total Spend Time : %.10f Second!\r\n", spendTime);
+	printf_s("Per Data Spend Time : %.10f Second!\r\n", spendTime / DataSize);
+
 	getchar();
 	
 	return 0;

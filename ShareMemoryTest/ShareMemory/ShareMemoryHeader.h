@@ -17,6 +17,8 @@
 #define _ClientSending 0x01
 #define _ServerSending 0x03
 #define _UnSend 0x00
+
+#define OutputConsole 0
 //volatile
 struct MyDataStruct
 {
