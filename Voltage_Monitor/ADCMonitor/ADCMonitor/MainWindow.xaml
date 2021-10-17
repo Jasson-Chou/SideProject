@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:local="clr-namespace:ADCMonitor"
         mc:Ignorable="d"
         DataContext="{StaticResource Locator}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Test" Command="{Binding Main.TestCommand}"/>
-    </Grid>
+    <Frame Initialized="MainFrame_Initialized" x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
 </Window>

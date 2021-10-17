@@ -49,7 +49,12 @@ namespace GUIWaveform
         {
             try
             {
-                
+                ConfigurationManager.SetPropertyItem(nameof(VBW), VBW.ToString());
+                ConfigurationManager.SetPropertyItem(nameof(TBH), TBH.ToString());
+                ConfigurationManager.SetPropertyItem(nameof(ZVH), ZVH.ToString());
+                ConfigurationManager.SetPropertyItem(nameof(TUP), TUP.ToString());
+                ConfigurationManager.SetPropertyItem(nameof(xdpi), xdpi.ToString());
+                ConfigurationManager.SetPropertyItem(nameof(ydpi), ydpi.ToString());
             }
             catch(Exception ex)
             {
@@ -63,12 +68,12 @@ namespace GUIWaveform
         {
             try
             {
-                VBW = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(VBW)), out double _VBW) ? _VBW : throw new Exception($"{nameof(VBW)} Parseing Error");
-                TBH = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(TBH)), out double _TBH) ? _TBH : throw new Exception($"{nameof(TBH)} Parseing Error");
-                ZVH = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(ZVH)), out double _ZVH) ? _ZVH : throw new Exception($"{nameof(ZVH)} Parseing Error");
-                TUP = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(TUP)), out double _TUP) ? _TUP : throw new Exception($"{nameof(TUP)} Parseing Error");
-                xdpi = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(xdpi)), out double _xdpi) ? _xdpi : throw new Exception($"{nameof(xdpi)} Parseing Error");
-                ydpi = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(ydpi)), out double _ydpi) ? _ydpi : throw new Exception($"{nameof(ydpi)} Parseing Error");
+                VBW = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(VBW)), out double _VBW) ? _VBW : throw new Exception($"{nameof(VBW)} Parsing Error");
+                TBH = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(TBH)), out double _TBH) ? _TBH : throw new Exception($"{nameof(TBH)} Parsing Error");
+                ZVH = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(ZVH)), out double _ZVH) ? _ZVH : throw new Exception($"{nameof(ZVH)} Parsing Error");
+                TUP = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(TUP)), out double _TUP) ? _TUP : throw new Exception($"{nameof(TUP)} Parsing Error");
+                xdpi = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(xdpi)), out double _xdpi) ? _xdpi : throw new Exception($"{nameof(xdpi)} Parsing Error");
+                ydpi = double.TryParse(ConfigurationManager.GetPropertyItemValue(nameof(ydpi)), out double _ydpi) ? _ydpi : throw new Exception($"{nameof(ydpi)} Parsing Error");
             }
             catch (Exception ex)
             {

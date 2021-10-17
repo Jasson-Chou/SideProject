@@ -17,49 +17,55 @@ namespace GUIWaveform
         }
         public DrawingWaveformContext()
         {
-            VoltageItemsSource = new VoltageItemList();
+            ADCItemsSource = new ADCItemList();
             DrawingConfig = new DrawingConfiguration();
         }
 
-        public VoltageItemList VoltageItemsSource { get; }
+        public ADCItemList ADCItemsSource { get; }
 
         public DrawingConfiguration DrawingConfig { get; }
 
-        public DrawingVisual drawingVisualA, drawingVisualB, drawingVisualC, drawingVisualD;
+        private DrawingVisual drawingVisualA, drawingVisualB, drawingVisualC, drawingVisualD, drawingVisualE;
 
-        public void Render(ImageSource imageSource, ERenderType renderType)
+        public void Render(System.Windows.Controls.Image image, ERenderType renderType)
         {
-            switch(renderType)
+            switch (renderType)
             {
                 case ERenderType.All:
                     RenderA();
                     RenderB();
                     RenderC();
                     RenderD();
+                    RenderE();
                     break;
                 case ERenderType.Horizontal:
                     RenderB();
                     RenderC();
                     RenderD();
+                    RenderE();
                     break;
             }
+
             RenderTargetBitmap bmp = new RenderTargetBitmap((int)DrawingConfig.MW, (int)DrawingConfig.MH, DrawingConfig.xdpi, DrawingConfig.ydpi, PixelFormats.Pbgra32);
-            bmp.Render(drawingVisualA);
-            bmp.Render(drawingVisualB);
-            bmp.Render(drawingVisualC);
-            bmp.Render(drawingVisualD);
-            imageSource = bmp;
+
+            bmp.Render(drawingVisualA); // A
+            bmp.Render(drawingVisualB); // B
+            bmp.Render(drawingVisualC); // C
+            bmp.Render(drawingVisualD); // D
+            bmp.Render(drawingVisualE); // E
+
+            image.Source = bmp;
         }
 
         /// <summary>
         /// Drawing Voltage Bar
-        /// </summary>
+        /// </summary> 
         private void RenderA()
         {
             drawingVisualA = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisualA.RenderOpen();
-
-            drawingContext.Close();
+            DrawingContext dc = drawingVisualA.RenderOpen();
+            dc.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Red), 1.0d), new System.Windows.Rect( new System.Windows.Point(10 , 10),new System.Windows.Size(800, 600)));
+            dc.Close();
         }
 
         /// <summary>
@@ -68,9 +74,9 @@ namespace GUIWaveform
         private void RenderB()
         {
             drawingVisualB = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisualB.RenderOpen();
+            DrawingContext dc = drawingVisualB.RenderOpen();
 
-            drawingContext.Close();
+            dc.Close();
         }
 
         /// <summary>
@@ -79,9 +85,9 @@ namespace GUIWaveform
         private void RenderC()
         {
             drawingVisualC = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisualC.RenderOpen();
+            DrawingContext dc = drawingVisualC.RenderOpen();
 
-            drawingContext.Close();
+            dc.Close();
         }
 
         /// <summary>
@@ -90,14 +96,25 @@ namespace GUIWaveform
         private void RenderD()
         {
             drawingVisualD = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisualD.RenderOpen();
+            DrawingContext dc = drawingVisualD.RenderOpen();
 
-            drawingContext.Close();
+            dc.Close();
+        }
+
+        /// <summary>
+        /// Drawing Max Voltage Sign
+        /// </summary>
+        private void RenderE()
+        {
+            drawingVisualE = new DrawingVisual();
+            DrawingContext dc = drawingVisualD.RenderOpen();
+
+            dc.Close();
         }
 
         public override string ToString()
         {
-            return VoltageItemsSource?.ToString();
+            return ADCItemsSource?.ToString();
         }
     }
 }

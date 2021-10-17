@@ -49,7 +49,7 @@
     <Compile Include="DrawingConfiguration.cs" />
     <Compile Include="DrawingWaveformContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VoltageItem.cs" />
+    <Compile Include="ADCItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GUIWaveform.config" />

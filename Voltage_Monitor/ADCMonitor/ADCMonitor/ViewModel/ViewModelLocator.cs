@@ -43,6 +43,7 @@ namespace ADCMonitor.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ADCMonitorViewModel>();
         }
 
         public MainViewModel Main
@@ -50,6 +51,14 @@ namespace ADCMonitor.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public ADCMonitorViewModel ADCMonitorVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ADCMonitorViewModel>();
             }
         }
         

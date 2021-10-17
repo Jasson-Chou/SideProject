@@ -24,5 +24,10 @@ namespace ADCMonitor
         {
             InitializeComponent();
         }
+
+        private void MainFrame_Initialized(object sender, EventArgs e)
+        {
+            mainFrame.Navigate(new View.ADCMonitorView());
+        }
     }
 }
