@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-11-09T13:19:12.168Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36 Edg/95.0.1020.44" etag="ef_RvH2qjTtvwYJ2jKIA" version="15.7.0" type="github" pages="5">
+<mxfile host="app.diagrams.net" modified="2021-11-09T13:49:10.142Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36 Edg/95.0.1020.44" etag="zSsc6nd8vGwtnKDEhY9p" version="15.7.0" type="github" pages="5">
   <diagram name="Page-1" id="e7e014a7-5840-1c2e-5031-d8a46d1fe8dd">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="#ffffff" math="0" shadow="0">
       <root>
@@ -441,12 +441,12 @@
     </mxGraphModel>
   </diagram>
   <diagram id="KiNTaDNTK7l-rcP5J92C" name="UML Class Diagram">
-    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="1963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="ldt7kKGdEctzpccvSemf-0" />
         <mxCell id="ldt7kKGdEctzpccvSemf-1" parent="ldt7kKGdEctzpccvSemf-0" />
         <mxCell id="2Zk7jnsbdr5MeqRcRmnn-0" value="ComProt" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="ldt7kKGdEctzpccvSemf-1" vertex="1">
-          <mxGeometry x="140" y="269" width="160" height="216" as="geometry" />
+          <mxGeometry x="415" y="-30" width="160" height="216" as="geometry" />
         </mxCell>
         <mxCell id="2Zk7jnsbdr5MeqRcRmnn-1" value="+ ComName: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2Zk7jnsbdr5MeqRcRmnn-0" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
@@ -613,7 +613,7 @@
           <mxGeometry y="86" width="330" height="26" as="geometry" />
         </mxCell>
         <mxCell id="gNysHzQY2rebbmg_4g1F-0" value="DrawingConfiguration" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="ldt7kKGdEctzpccvSemf-1" vertex="1">
-          <mxGeometry x="560" y="680" width="330" height="658" as="geometry" />
+          <mxGeometry x="600" y="720" width="330" height="658" as="geometry" />
         </mxCell>
         <mxCell id="gNysHzQY2rebbmg_4g1F-1" value="+ ConfigurationManager: ConfigurationManager" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="gNysHzQY2rebbmg_4g1F-0" vertex="1">
           <mxGeometry y="26" width="330" height="26" as="geometry" />
@@ -691,7 +691,7 @@
           <mxGeometry y="632" width="330" height="26" as="geometry" />
         </mxCell>
         <mxCell id="gNysHzQY2rebbmg_4g1F-4" value="ConfigurationManager" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="ldt7kKGdEctzpccvSemf-1" vertex="1">
-          <mxGeometry x="970" y="680" width="300" height="242" as="geometry" />
+          <mxGeometry x="1040" y="720" width="300" height="242" as="geometry" />
         </mxCell>
         <mxCell id="gNysHzQY2rebbmg_4g1F-5" value="+ ConfigFileName: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="gNysHzQY2rebbmg_4g1F-4" vertex="1">
           <mxGeometry y="26" width="300" height="26" as="geometry" />
