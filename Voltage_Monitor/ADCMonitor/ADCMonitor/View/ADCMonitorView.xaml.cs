@@ -34,21 +34,38 @@ namespace ADCMonitor.View
         {
             InitializeComponent();
             SubscriptADCVMEvent();
+            InitializeWaveformImage();
         }
 
-        public void SubscriptADCVMEvent()
+        private void InitializeWaveformImage()
+        {
+            DrawingConfiguration_OnUpdateMinImageSize(DrawingConfiguration.MinMW, DrawingConfiguration.MinMH);
+        }
+
+        private void SubscriptADCVMEvent()
         {
             ADCMonitorVM.OnRender += ADCMonitorVM_OnRender;
+            DrawingConfiguration.OnUpdateMinImageSize += DrawingConfiguration_OnUpdateMinImageSize;
         }
 
-        public void UnsubscriptADCVMEvent()
+        private void DrawingConfiguration_OnUpdateMinImageSize(double MinWidth, double MinHeight)
+        {
+            this.waveformImage.MinWidth = MinWidth;
+            this.waveformImage.MinHeight = MinHeight;
+
+            this.waveformBorder.MinWidth = MinWidth;
+            this.waveformBorder.MinHeight = MinHeight;
+        }
+
+        private void UnsubscriptADCVMEvent()
         {
             ADCMonitorVM.OnRender -= ADCMonitorVM_OnRender;
+            DrawingConfiguration.OnUpdateMinImageSize -= DrawingConfiguration_OnUpdateMinImageSize;
         }
 
-        private void ADCMonitorVM_OnRender()
+        private void ADCMonitorVM_OnRender(DrawingWaveformContext.ERenderType eRenderType)
         {
-            throw new NotImplementedException();
+            DrawingWaveformContext.Render(waveformImage, eRenderType);
         }
 
         private void Page_Initialized(object sender, EventArgs e)
@@ -60,17 +77,15 @@ namespace ADCMonitor.View
         {
 #if DEBUG
             Debug.WriteLine($"[Border Size W * H]: {e.NewSize.Width} * {e.NewSize.Height}");
-            Debug.WriteLine($"[ Image Size W * H]: {waveformImage.Width} * {waveformImage.Height}");
+            Debug.WriteLine($"[ Image Size W * H]: {waveformImage.ActualWidth} * {waveformImage.ActualHeight}");
 #endif
-            waveformImage.Width = waveformBorder.ActualWidth;
+            
+            DrawingConfiguration.MW = e.NewSize.Width;
 
-            waveformImage.Height = waveformBorder.ActualHeight;
-
-            DrawingConfiguration.MW = waveformBorder.ActualWidth;
-
-            DrawingConfiguration.MH = waveformBorder.ActualHeight;
+            DrawingConfiguration.MH = e.NewSize.Height;
 
             DrawingWaveformContext.Render(waveformImage, DrawingWaveformContext.ERenderType.All);
+            
         }
 
         public void Close()

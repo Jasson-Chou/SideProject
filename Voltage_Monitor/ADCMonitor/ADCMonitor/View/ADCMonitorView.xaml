@@ -3,6 +3,7 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                DataContext="{Binding ADCMonitorVM, Source={StaticResource Locator}}"
                 Initialized="Page_Initialized"
       >
     <Grid>
@@ -13,17 +14,15 @@
         </Grid.RowDefinitions>
         <!--Connect Btn-->
         <telerik:RadDockPanel Grid.Row="2">
-            
-            <ScrollBar Orientation="Vertical" telerik:RadDockPanel.Dock="Left"/>
             <Grid telerik:RadDockPanel.Dock="Bottom">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <telerik:RadSlider Height="15" Width="150" HorizontalAlignment="Right" telerik:StyleManager.Theme="Crystal" Grid.Row="0"/>
-                <ScrollBar Orientation="Horizontal" Grid.Row="1"/>
+                <ScrollBar Value="{Binding XOffset, UpdateSourceTrigger=PropertyChanged}" Orientation="Horizontal" Grid.Row="0"/>
+                <telerik:RadSlider Height="15" Width="150" HorizontalAlignment="Right" telerik:StyleManager.Theme="Crystal" Grid.Row="1"/>
             </Grid>
-            <Border x:Name="waveformBorder" SizeChanged="WaveformBorder_SizeChanged" BorderThickness="0.1" BorderBrush="Gray">
+            <Border x:Name="waveformBorder" SizeChanged="WaveformBorder_SizeChanged" BorderThickness="0.0" BorderBrush="Gray">
                 <Image x:Name="waveformImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Border>
         </telerik:RadDockPanel>

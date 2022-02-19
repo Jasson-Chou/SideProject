@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ADCMonitor
+namespace ADCMonitor.View
 {
     /// <summary>
     /// MainWindow.xaml 的互動邏輯

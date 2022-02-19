@@ -8,7 +8,7 @@ namespace GUIWaveform
 {
     public class ACDItem
     {
-        public ACDItem(int index, byte value)
+        public ACDItem(int index, ushort value)
         {
             this.Index = index;
             this.Value = value;
@@ -19,7 +19,7 @@ namespace GUIWaveform
         /// <summary>
         /// Unit: ADC Value
         /// </summary>
-        public byte Value { get; }
+        public ushort Value { get; }
 
         internal ADCItemList ADCItemsSource { get; set; }
 
@@ -31,7 +31,7 @@ namespace GUIWaveform
 
         public override string ToString()
         {
-            return $"Index{Index} - Value {Value} ADC";
+            return $"Index[{Index}] - ADC Value \"{Value}\"";
         }
     }
 
