@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32.TaskScheduler;
+
+
 namespace Win32TaskScheduler_Demo
 {
     class Program
@@ -107,7 +109,6 @@ namespace Win32TaskScheduler_Demo
 
                 var settings = tsDef.Settings;
                 settings.StartWhenAvailable = true;
-
                 /* 
                  * UserId
                  *Summary:
