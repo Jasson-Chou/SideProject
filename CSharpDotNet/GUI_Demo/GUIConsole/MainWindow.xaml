@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUIConsole"
         mc:Ignorable="d"
         DataContext="{Binding Path=Main, Source={StaticResource Locator}}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" x:Name="mainWindow" Initialized="MainWindow_Initialized">
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>

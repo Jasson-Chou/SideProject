@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,24 @@ namespace GUIConsole
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainWindow_Initialized(object sender, EventArgs e)
+        {
+            this.mainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
+            int cnt = VisualTreeHelper.GetChildrenCount(this.mainWindow);
+            for(int idx = 0; idx < cnt; idx++)
+            {
+                var child = VisualTreeHelper.GetChild(this.mainWindow, idx);
+
+            }
+
+        }
+        
+
+        private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
