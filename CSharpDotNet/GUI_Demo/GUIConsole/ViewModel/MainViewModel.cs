@@ -2,6 +2,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GUIConsole.Model;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -34,6 +35,7 @@ namespace GUIConsole.ViewModel
             else
             {
                 // Code runs "for real"
+                _consoleMessage = new StringBuilder(1024 * 1024 * 64);
                 MainMenu();
             }
         }
@@ -75,7 +77,7 @@ namespace GUIConsole.ViewModel
                                 break;
                             case MainMenuModel.Menu.Exit:
                                 int sec = 5;
-                                ConsoleWriteLine("5 Second to exit application.");
+                                ConsoleWriteLine($"{sec} Second to exit application.");
                                 do
                                 {
                                     ConsoleWriteLine($"{sec} Second...");
@@ -84,6 +86,7 @@ namespace GUIConsole.ViewModel
                                 } while (sec > 0);
                                 App.Current.Shutdown(0);
                                 break;
+                            
                         }
                     }
                     else
@@ -146,35 +149,38 @@ namespace GUIConsole.ViewModel
             return input;
         }
 
-        private string _consoleMessage;
+        private StringBuilder _consoleMessage;
 
         public string ConsoleMessage
         {
-            get { return _consoleMessage; }
-            set { _consoleMessage = value; base.RaisePropertyChanged(); }
+            get { return _consoleMessage.ToString(); }
         }
 
         public void ConsoleWrite(string msg)
         {
-            ConsoleMessage += msg;
+            _consoleMessage.Append(msg);
+            base.RaisePropertyChanged(() => ConsoleMessage);
         }
 
         public void ConsoleWriteLine(string msg)
         {
-            ConsoleWrite(msg + Environment.NewLine);
+            _consoleMessage.AppendLine(msg);
+            base.RaisePropertyChanged(() => ConsoleMessage);
         }
 
         public void ConsoleClear()
         {
-            ConsoleMessage = string.Empty;
+            _consoleMessage.Clear();
+            base.RaisePropertyChanged(() => ConsoleMessage);
         }
 
 
 #if DEBUG
-        private void DebugWriteLine(string msg)
+        private void DebugWriteLine(string msg, params string[] args)
         {
             System.Diagnostics.Debug.WriteLine(msg);
         }
 #endif
+        
     }
 }

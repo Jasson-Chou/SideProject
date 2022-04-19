@@ -46,26 +46,6 @@ void GetWinlogonProcessId(const UINT32 ui_buffSize, ProcessInfo* pproInfo_buff, 
 	}
 }
 
-BOOL CreateEnvirnment(HANDLE hToken, LPVOID pEnv)
-{
-	STARTUPINFO startupInfo;
-	ZeroMemory(&startupInfo, sizeof(STARTUPINFO));
-	startupInfo.cb = sizeof(STARTUPINFO);
-	startupInfo.lpDesktop = LPWSTR("WinSta0\\Default");
-	startupInfo.wShowWindow = SW_SHOW;
-	startupInfo.dwFlags = STARTF_USESHOWWINDOW;
-
-	LPVOID pEnv = NULL;
-	DWORD dwCreateionFlag = NORMAL_PRIORITY_CLASS | CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT;
-
-	if (!CreateEnvironmentBlock(&pEnv, hToken, FALSE))
-	{
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
 BOOL FindMatchSessionIdProcessInfo(const DWORD dw_SessionID, ProcessInfo* pproInfo_buff, const UINT32 ui_buffSize, ProcessInfo* pproInfo_match)
 {
 	for (UINT32 idx = 0; idx < ui_buffSize; idx++)
@@ -80,7 +60,7 @@ BOOL FindMatchSessionIdProcessInfo(const DWORD dw_SessionID, ProcessInfo* pproIn
 	return FALSE;
 }
 
-bool OpenProcessByPassUAC(const char* sz_appFileName)
+BOOL OpenProcessByPassUAC(const char* sz_appFileName)
 {
 	DWORD d_conSessId;
 	UINT32 uiGetSize;
@@ -100,50 +80,50 @@ bool OpenProcessByPassUAC(const char* sz_appFileName)
 	ZeroMemory(winlogonProcessInfos, sizeof(ProcessInfo) * WinlogonProcessIdsBuffSize);
 	GetWinlogonProcessId(WinlogonProcessIdsBuffSize, winlogonProcessInfos, &uiGetSize);
 
+	PROCESS_INFORMATION processInfo;
+	ZeroMemory(&processInfo, sizeof(PROCESS_INFORMATION));
+
+	STARTUPINFO startupInfo;
+	ZeroMemory(&startupInfo, sizeof(STARTUPINFO));
+	startupInfo.cb = sizeof(STARTUPINFO);
+	startupInfo.lpDesktop = LPWSTR("WinSta0\\Default");
+	startupInfo.wShowWindow = SW_SHOW;
+	startupInfo.dwFlags = STARTF_USESHOWWINDOW;
+	LPVOID pEnv = NULL;
+
+	DWORD dwCreateionFlag = NORMAL_PRIORITY_CLASS | CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT;
+
 	d_conSessId = WTSGetActiveConsoleSessionId();
 	if(!FindMatchSessionIdProcessInfo(d_conSessId, winlogonProcessInfos, uiGetSize, &matchProcessInfo))
 	{
-		return false;
+		return FALSE;
 	}
 
 	h_Process = OpenProcess(PROCESS_ALL_ACCESS, FALSE, matchProcessInfo.PID);
 	if(!OpenProcessToken(h_Process, d_DesiredAccess, &h_ProcessToken))
 	{
 		CloseHandle(h_Process);
-		return false;
+		return FALSE;
 	}
 
 	if (!DuplicateTokenEx(h_ProcessToken, MAXIMUM_ALLOWED, NULL, SecurityIdentification, TokenPrimary, &h_DuplicateToken))
 	{
 		CloseHandle(h_ProcessToken);
-		return false;
+		return FALSE;
 	}
 
 	if (!SetTokenInformation(h_DuplicateToken, TokenSessionId, (void*)&d_conSessId, sizeof(DWORD)))
 	{
 		CloseHandle(h_ProcessToken);
 		CloseHandle(h_DuplicateToken);
-		return false;
+		return FALSE;
 	}
-
-
-	STARTUPINFO startupInfo;
-	PROCESS_INFORMATION processInfo;
-	ZeroMemory(&startupInfo, sizeof(STARTUPINFO));
-	ZeroMemory(&processInfo, sizeof(PROCESS_INFORMATION));
-	startupInfo.cb = sizeof(STARTUPINFO);
-	startupInfo.lpDesktop = LPWSTR("WinSta0\\Default");
-	startupInfo.wShowWindow = SW_SHOW;
-	startupInfo.dwFlags = STARTF_USESHOWWINDOW;
-
-	LPVOID pEnv = NULL;
-	DWORD dwCreateionFlag = NORMAL_PRIORITY_CLASS | CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT;
 	
 	if (!CreateEnvironmentBlock(&pEnv, h_DuplicateToken, FALSE))
 	{
 		CloseHandle(h_ProcessToken);
 		CloseHandle(h_DuplicateToken);
-		return false;
+		return FALSE;
 	}
 
 	
@@ -152,7 +132,7 @@ bool OpenProcessByPassUAC(const char* sz_appFileName)
 	{
 		CloseHandle(h_ProcessToken);
 		CloseHandle(h_DuplicateToken);
-		return false;
+		return FALSE;
 	}
 
 	if (pEnv)
@@ -163,10 +143,10 @@ bool OpenProcessByPassUAC(const char* sz_appFileName)
 	CloseHandle(h_ProcessToken);
 	CloseHandle(h_DuplicateToken);
 
-	return true;
+	return TRUE;
 }
 
-bool OpenProcess(const char* AppFileName, int SeesionID)
+BOOL OpenProcess(const char* AppFileName, int SeesionID)
 {
 	DWORD d_sessionID = (DWORD)SeesionID;
 	LUID luid_LookupPriVal;
@@ -194,25 +174,25 @@ bool OpenProcess(const char* AppFileName, int SeesionID)
 
 	if (!WTSQueryUserToken(d_sessionID, &h_UserToken))
 	{
-		return false;
+		return FALSE;
 	}
 
 	if (!LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &luid_LookupPriVal))
 	{
 		CloseHandle(h_UserToken);
-		return false;
+		return FALSE;
 	}
 
 	if (!AdjustTokenPrivileges(h_UserToken, FALSE, &tkp, sizeof(tkp), NULL, NULL))
 	{
 		CloseHandle(h_UserToken);
-		return false;
+		return FALSE;
 	}
 	
 	if (!DuplicateTokenEx(h_UserToken, MAXIMUM_ALLOWED, NULL, SecurityIdentification, TokenPrimary, &h_DuplicateToken))
 	{
 		CloseHandle(h_UserToken);
-		return false;
+		return FALSE;
 	}
 
 	if (!SetTokenInformation(h_DuplicateToken, TokenSessionId, (void*)&d_sessionID, sizeof(DWORD)))
@@ -221,24 +201,20 @@ bool OpenProcess(const char* AppFileName, int SeesionID)
 		CloseHandle(h_DuplicateToken);
 		return false;
 	}
-	
-	
-	if(!CreateEnvirnment(h_DuplicateToken, pEnv))
+
+	if (!CreateEnvironmentBlock(&pEnv, h_DuplicateToken, FALSE))
 	{
 		CloseHandle(h_UserToken);
 		CloseHandle(h_DuplicateToken);
-		return false;
+		return FALSE;
 	}
 
-
-	
-	
 	if (!CreateProcessAsUser(h_DuplicateToken, NULL, LPWSTR(AppFileName), NULL, NULL,
 		FALSE, dwCreateionFlag, pEnv, NULL, &startupInfo, &processInfo))
 	{
 		CloseHandle(h_UserToken);
 		CloseHandle(h_DuplicateToken);
-		return false;
+		return FALSE;
 	}
 
 	if (pEnv)
@@ -249,5 +225,5 @@ bool OpenProcess(const char* AppFileName, int SeesionID)
 	CloseHandle(h_UserToken);
 	CloseHandle(h_DuplicateToken);
 
-	return true;
+	return TRUE;
 }

@@ -29,7 +29,7 @@ namespace GUIConsole.Model
         public bool TryGetMenuType(int type,out Menu menuType)
         {
             menuType = default(Menu);
-            if (base.TryGetMenuType(type, out object _menuType))
+            if (base.TryParse(type))
             {
                 menuType = (Menu)type;
                 return true;

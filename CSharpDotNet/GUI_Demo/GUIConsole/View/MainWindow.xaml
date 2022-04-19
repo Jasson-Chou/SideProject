@@ -1,4 +1,4 @@
-﻿<Window x:Class="GUIConsole.MainWindow"
+﻿<Window x:Class="GUIConsole.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,16 +6,23 @@
         xmlns:local="clr-namespace:GUIConsole"
         mc:Ignorable="d"
         DataContext="{Binding Path=Main, Source={StaticResource Locator}}"
-        Title="MainWindow" Height="450" Width="800" x:Name="mainWindow" Initialized="MainWindow_Initialized">
+        Title="My Console" Height="450" Width="800" x:Name="mainWindow" 
+        Initialized="MainWindow_Initialized"
+        Style="{DynamicResource windowStyle}"
+        >
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding UserInput}" Grid.Column="0" />
+            <TextBox x:Name="inputCMDTextBox" Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" >
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding SendCommand}" Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
             <Button Command="{Binding SendCommand}" Content="Send" Grid.Column="1" Width="100"/>
         </Grid>
-        <TextBox Text="{Binding ConsoleMessage}" AcceptsReturn="True" IsReadOnly="True"/>
+        <TextBox Text="{Binding ConsoleMessage, Mode=OneWay}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" IsReadOnly="True"/>
     </DockPanel>
 </Window>

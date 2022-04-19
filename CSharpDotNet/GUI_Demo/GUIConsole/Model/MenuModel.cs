@@ -10,6 +10,8 @@ namespace GUIConsole.Model
     {
         private string _menu;
 
+        private Array enumValues;
+
         public MenuModel()
         {
             
@@ -18,12 +20,19 @@ namespace GUIConsole.Model
         public MenuModel(Type menuType)
         {
             MenuType = menuType;
+            enumValues = Enum.GetValues(menuType);
         }
 
-        protected bool TryGetMenuType(int type, out object menuType)
+        protected bool TryParse(int type)
         {
-            menuType = Enum.ToObject(MenuType, type);
-            return menuType != null;
+            foreach(var obj in enumValues)
+            {
+                if((int)obj == type)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override string ToString()
