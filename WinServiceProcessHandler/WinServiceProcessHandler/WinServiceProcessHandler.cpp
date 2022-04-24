@@ -17,6 +17,7 @@
 
 #define WinlogonProcessIdsBuffSize 1024
 
+
 typedef struct
 {
 	DWORD PID;
@@ -60,7 +61,7 @@ BOOL FindMatchSessionIdProcessInfo(const DWORD dw_SessionID, ProcessInfo* pproIn
 	return FALSE;
 }
 
-BOOL OpenProcessByPassUAC(const char* sz_appFileName)
+BOOL OpenProcessByPassUAC(const char* szAppFileName)
 {
 	DWORD d_conSessId;
 	UINT32 uiGetSize;
@@ -127,7 +128,7 @@ BOOL OpenProcessByPassUAC(const char* sz_appFileName)
 	}
 
 	
-	if (!CreateProcessAsUser(h_DuplicateToken, NULL, LPWSTR(sz_appFileName), NULL, NULL,
+	if (!CreateProcessAsUser(h_DuplicateToken, NULL, LPWSTR(szAppFileName), NULL, NULL,
 		FALSE, dwCreateionFlag, pEnv, NULL, &startupInfo, &processInfo))
 	{
 		CloseHandle(h_ProcessToken);
@@ -146,16 +147,15 @@ BOOL OpenProcessByPassUAC(const char* sz_appFileName)
 	return TRUE;
 }
 
-BOOL OpenProcess(const char* AppFileName, int SeesionID)
+BOOL OpenProcess(const char* szAppFileName, DWORD dwSeesionID)
 {
-	DWORD d_sessionID = (DWORD)SeesionID;
+	DWORD d_sessionID = dwSeesionID;
 	LUID luid_LookupPriVal;
 	HANDLE h_UserToken = NULL;
 	HANDLE h_DuplicateToken = NULL;
 
 	TOKEN_PRIVILEGES tkp;
 	tkp.PrivilegeCount = 1;
-	tkp.Privileges[0].Luid = luid_LookupPriVal;
 	tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 
 	STARTUPINFO startupInfo;
@@ -183,6 +183,7 @@ BOOL OpenProcess(const char* AppFileName, int SeesionID)
 		return FALSE;
 	}
 
+	tkp.Privileges[0].Luid = luid_LookupPriVal;
 	if (!AdjustTokenPrivileges(h_UserToken, FALSE, &tkp, sizeof(tkp), NULL, NULL))
 	{
 		CloseHandle(h_UserToken);
@@ -209,7 +210,7 @@ BOOL OpenProcess(const char* AppFileName, int SeesionID)
 		return FALSE;
 	}
 
-	if (!CreateProcessAsUser(h_DuplicateToken, NULL, LPWSTR(AppFileName), NULL, NULL,
+	if (!CreateProcessAsUser(h_DuplicateToken, NULL, LPWSTR(szAppFileName), NULL, NULL,
 		FALSE, dwCreateionFlag, pEnv, NULL, &startupInfo, &processInfo))
 	{
 		CloseHandle(h_UserToken);
