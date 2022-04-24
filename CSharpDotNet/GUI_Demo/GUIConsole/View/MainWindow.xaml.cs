@@ -37,7 +37,6 @@ namespace GUIConsole.View
             if (control != null)
             {
                 control.PreviewKeyDown += Control_PreviewKeyDown;
-                control.KeyDown += Control_KeyDown;
                 foreach(var child in GetChilds(control))
                 {
                     SetAllControlsKeyDown(child);
@@ -62,39 +61,5 @@ namespace GUIConsole.View
             this.inputCMDTextBox.Focus();
         }
 
-        private void Control_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-        }
-
-        private void AppCloseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            App.Current.Shutdown();
-        }
-
-        private void AppZoonInOutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            switch(WindowState)
-            {
-                case WindowState.Maximized:
-                    WindowState = WindowState.Normal;
-                    break;
-                case WindowState.Normal:
-                    WindowState = WindowState.Maximized;
-                    break;
-            }
-        }
-
-        private void AppHideBtn_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void titleBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                this.mainWindow.DragMove();
-        }
-       
     }
 }
