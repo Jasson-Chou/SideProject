@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IPCService
+{
+    internal class TCPSpecIni
+    {
+        [DllImport("kernel32")]
+        private static extern int GetPrivateProfileInt(string Section, string KeyName, int Default, string FileName);
+
+        [DllImport("kernel32")]
+        private static extern int WritePrivateProfileInt(string Section, string KeyName, int value, string FileName);
+        
+        [DllImport("kernel32")]
+        private static extern int GetPrivateProfileString(string Section, string KeyName, string Default, StringBuilder Val, int Size, string FileName);
+
+        [DllImport("kernel32")]
+        private static extern int WritePrivateProfileString(string Section, string KeyName, string String, string FileName);
+        
+        private string _fileName;
+        public string FileName
+        {
+            get => _fileName;
+            set
+            {
+                if(!File.Exists(value))
+                {
+                    FileNotFoundHandler(value);
+                }
+
+                _fileName = value;
+                RefreshFileHandler();
+            }
+        }
+        private const string INISectionName = "SPEC";
+        public string IPAddress { get; private set; }
+        public int Port { get; private set; }
+        public int BufferBytes { get; private set; }
+
+        //private FileSystemWatcher fileSystemWatcher { get; }
+
+        public TCPSpecIni(string fileName)
+        {
+            this.FileName = fileName;
+        }
+
+        private void RefreshFileHandler()
+        {
+            IPAddress = ReadString(_fileName, INISectionName, nameof(IPAddress));
+            Port = ReadInt(_fileName, INISectionName, nameof(Port));
+            BufferBytes = ReadInt(_fileName, INISectionName, nameof(BufferBytes));
+
+#if DEBUG
+            StringBuilder sb = new StringBuilder(2048);
+            sb.AppendLine("INI File Content:");
+            sb.AppendLine($"{nameof(IPAddress)} = {IPAddress}");
+            sb.AppendLine($"{nameof(Port)} = {Port}");
+            sb.AppendLine($"{nameof(BufferBytes)} = {BufferBytes}");
+            Debug.WriteLine(sb.ToString());
+#endif
+
+        }
+
+        private void FileNotFoundHandler(string fileName)
+        {
+            WriteString(fileName, INISectionName, nameof(IPAddress), "127.0.0.1");
+            WriteInt(fileName, INISectionName, nameof(Port), 4096);
+            WriteInt(fileName, INISectionName, nameof(BufferBytes), 128 * 1024);
+        }
+
+        private void WriteInt(string fileName, string Section, string key, int value)
+        {
+            WritePrivateProfileInt(Section, key, value, fileName);
+        }
+
+        private void WriteString(string fileName, string Section, string key, string value)
+        {
+            WritePrivateProfileString(Section, key, value, fileName);
+        }
+
+        private int ReadInt(string fileName, string Section, string key)
+        {
+            return GetPrivateProfileInt(Section, key, -1, fileName);
+        }
+
+        private string ReadString(string fileName, string Section, string Key)
+        {
+            StringBuilder sb = new StringBuilder(512);
+            GetPrivateProfileString(Section, Key, "Error", sb, 512, fileName);
+            return sb.ToString();
+        }
+        
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder(2048);
+            sb.AppendLine($"INI File Name at {FileName}");
+            sb.AppendLine("INI File Content:");
+            sb.AppendLine($"{nameof(IPAddress)} = {IPAddress}");
+            sb.AppendLine($"{nameof(Port)} = {Port}");
+            sb.AppendLine($"{nameof(BufferBytes)} = {BufferBytes}");
+            return sb.ToString();
+        }
+    }
+}
