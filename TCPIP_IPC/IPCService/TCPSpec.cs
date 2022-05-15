@@ -19,6 +19,8 @@ namespace IPCService
         public string HostName { get; private set; }
         public System.Net.IPAddress IPCIPAddress { get; private set; }
 
+        public int ReceiveTimeout { get; private set; }
+
         public static TCPSpec Instance { get; }
         private TCPSpecIni specIni { get; }
         static TCPSpec()
@@ -37,6 +39,7 @@ namespace IPCService
             IPCIPAddress = System.Net.IPAddress.Parse(specIni.IPAddress);
             BufferBytes = specIni.BufferBytes;
             Port = specIni.Port;
+            ReceiveTimeout = specIni.ReceiveTimeout;
         }
 
         public void ReceiveSpecConvert(byte[] data, out byte[] buffer)
@@ -52,6 +55,11 @@ namespace IPCService
             buffer = new byte[BufferBytes];
             BitConverter.GetBytes(datalen).CopyTo(buffer, 0, BufferDataLenBytes);
             data.CopyTo(buffer, BufferDataLenBytes, datalen);
+        }
+
+        public bool IsTimeout(long ElapsedMilliseconds)
+        {
+            return ReceiveTimeout <= ElapsedMilliseconds;
         }
     }
 

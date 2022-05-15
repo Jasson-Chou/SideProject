@@ -24,6 +24,7 @@ namespace IPCService
         internal ClientPackage(Socket socket, int BufferSize, Action<ClientPackage> listenerHandler)
         {
             Socket = socket;
+            
             Buffer = new byte[BufferSize];
             ReadListenerHandleCancelTokenSource = new System.Threading.CancellationTokenSource();
             ReadListenerHandleCancelToken = ReadListenerHandleCancelTokenSource.Token;

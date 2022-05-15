@@ -19,6 +19,11 @@ namespace IPCService
 
     internal static class ArrayExtensions
     {
+        public static void Clear<T>(this T[] array)
+        {
+            Array.Clear(array, 0, array.Length);
+        }
+
         public static void Fill<T>(this T[] array, T value)
         {
             int i = array.Length - 1;

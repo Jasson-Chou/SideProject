@@ -42,6 +42,7 @@ namespace IPCService
         public string IPAddress { get; private set; }
         public int Port { get; private set; }
         public int BufferBytes { get; private set; }
+        public int ReceiveTimeout { get; private set; }
 
         //private FileSystemWatcher fileSystemWatcher { get; }
 
@@ -55,13 +56,14 @@ namespace IPCService
             IPAddress = ReadString(_fileName, INISectionName, nameof(IPAddress));
             Port = ReadInt(_fileName, INISectionName, nameof(Port));
             BufferBytes = ReadInt(_fileName, INISectionName, nameof(BufferBytes));
-
+            ReceiveTimeout = ReadInt(_fileName, INISectionName, nameof(ReceiveTimeout));
 #if DEBUG
             StringBuilder sb = new StringBuilder(2048);
             sb.AppendLine("INI File Content:");
             sb.AppendLine($"{nameof(IPAddress)} = {IPAddress}");
             sb.AppendLine($"{nameof(Port)} = {Port}");
             sb.AppendLine($"{nameof(BufferBytes)} = {BufferBytes}");
+            sb.AppendLine($"{nameof(ReceiveTimeout)} = {ReceiveTimeout}");
             Debug.WriteLine(sb.ToString());
 #endif
 
@@ -72,6 +74,7 @@ namespace IPCService
             WriteString(fileName, INISectionName, nameof(IPAddress), "127.0.0.1");
             WriteInt(fileName, INISectionName, nameof(Port), 4096);
             WriteInt(fileName, INISectionName, nameof(BufferBytes), 128 * 1024);
+            WriteInt(fileName, INISectionName, nameof(ReceiveTimeout), 5000);
         }
 
         private void WriteInt(string fileName, string Section, string key, int value)
@@ -105,6 +108,7 @@ namespace IPCService
             sb.AppendLine($"{nameof(IPAddress)} = {IPAddress}");
             sb.AppendLine($"{nameof(Port)} = {Port}");
             sb.AppendLine($"{nameof(BufferBytes)} = {BufferBytes}");
+            sb.AppendLine($"{nameof(ReceiveTimeout)} = {ReceiveTimeout} ms");
             return sb.ToString();
         }
     }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace IPCService
 {
     public delegate void OnIPCServerReadHandler(byte[] data, IClientPackage clientPackage);
+    public delegate void OnIPCServerSocketError(SocketError socketError);
     public class IPCServer : IDisposable
     {
         private TcpListener tcpListener;
@@ -16,6 +17,7 @@ namespace IPCService
         public bool IsOpen { get; private set; }
         private List<ClientPackage> ClientPackages;
         public event OnIPCServerReadHandler OnIPCRead = null;
+        public event OnIPCServerSocketError OnIPCReceiveSocketError = null;
         public IPCServer()
         {
             IsOpen = false;
@@ -32,8 +34,6 @@ namespace IPCService
             tcpListener.Start();
             AcceptSocketHandlerTask.Start();
         }
-
-        
 
         public bool Write(byte[] data, IClientPackage package)
         {
@@ -65,8 +65,30 @@ namespace IPCService
 
         private void ReadListenerHandler(ClientPackage clientPackage)
         {
+            Stopwatch timeoutWatch = new Stopwatch();
+            bool isReading = false;
             Socket socket = clientPackage.Socket;
+            int totalReceiveCnt = 0;
 
+            Action ReceiveDoneHandler = () =>
+            {
+                timeoutWatch.Stop();
+                totalReceiveCnt = 0;
+                clientPackage.Buffer.Clear();
+                isReading = false;
+            };
+
+            Action ReceivedHandler = () =>
+            {
+                TCPSpec.Instance.ReceiveSpecConvert(clientPackage.Buffer, out byte[] data);
+                OnIPCRead?.Invoke(data, clientPackage);
+            };
+
+            Action ReceiveTimeoutHandler = () =>
+            {
+                OnIPCReceiveSocketError?.Invoke(SocketError.TimedOut);
+            };
+            
             try
             {
                 do
@@ -74,22 +96,27 @@ namespace IPCService
 
                     if (socket.Poll(100, SelectMode.SelectRead))
                     {
-                        clientPackage.Buffer.Fill((byte)0);
-                        socket.BeginReceive(clientPackage.Buffer, 0, TCPSpec.Instance.BufferTotalBytes, SocketFlags.None, (ar) =>
+                        if(!isReading)
                         {
-                            ClientPackage package = (ClientPackage)ar.AsyncState;
-                            int receiveLen = socket.EndReceive(ar, out SocketError socketError);
-                            if (receiveLen != TCPSpec.Instance.BufferTotalBytes)
-                            {
-#if DEBUG
-                                Debug.WriteLine($"Recevice Length Error : {receiveLen} bytes, socket error {socketError}");
-#endif
-                                return;
-                            }
+                            isReading = true;
+                            timeoutWatch.Restart();
+                        }
 
-                            TCPSpec.Instance.ReceiveSpecConvert(package.Buffer, out byte[] data);
-                            OnIPCRead?.Invoke(data, clientPackage);
-                        }, clientPackage);
+                        int receiveCnt = socket.Receive(clientPackage.Buffer, totalReceiveCnt, TCPSpec.Instance.BufferTotalBytes, SocketFlags.None);
+                        totalReceiveCnt += receiveCnt;
+                        if(totalReceiveCnt == TCPSpec.Instance.BufferTotalBytes)
+                        {
+                            ReceivedHandler();
+                            ReceiveDoneHandler();
+                        }
+                        else if(TCPSpec.Instance.IsTimeout(timeoutWatch.ElapsedMilliseconds))
+                        {
+#if DEBUG
+                            Debug.WriteLine($"IPC Server Socket Receive Timeout");
+#endif
+                            ReceiveTimeoutHandler();
+                            ReceiveDoneHandler();
+                        }
                     }
                     else if (clientPackage.ReadListenerHandleCancelToken.IsCancellationRequested)
                     {
@@ -97,6 +124,10 @@ namespace IPCService
                         break;
                     }
                 } while (IsOpen);
+            }
+            catch(SocketException se)
+            {
+                OnIPCReceiveSocketError?.Invoke(se.SocketErrorCode);
             }
             catch (Exception e)
             {
