@@ -99,9 +99,7 @@ copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.pdb" "$(SolutionD
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NMakeOutput>Post.exe</NMakeOutput>
     <NMakePreprocessorDefinitions>_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeBuildCommandLine>copy "C:\Program Files (x86)\Progress\Telerik UI for WPF R1 2020\Binaries\WPF45\Telerik.Windows.Controls.dll" "$(SolutionDir)Application\Libs"
-copy "C:\Program Files (x86)\Progress\Telerik UI for WPF R1 2020\Binaries\WPF45\Telerik.Windows.Controls.Input.dll" "$(SolutionDir)Application\Libs"
-copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Configs"
+    <NMakeBuildCommandLine>copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Configs"
 copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.dll" "$(SolutionDir)Application\Libs"
 copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.pdb" "$(SolutionDir)Application\Libs"
 copy "$(SolutionDir)Lib\GlobalPath\bin\$(Configuration)\GlobalPath.dll" "$(SolutionDir)Application\Libs"
@@ -114,9 +112,7 @@ copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\System.Windows.Interactivity
 copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe" "$(SolutionDir)Application\"
 copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.exe.config" "$(SolutionDir)Application\"
 copy "$(SolutionDir)ADCMonitor\bin\$(Configuration)\ADCMonitor.pdb" "$(SolutionDir)Application\"</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>copy "C:\Program Files (x86)\Progress\Telerik UI for WPF R1 2020\Binaries\WPF45\Telerik.Windows.Controls.dll" "$(SolutionDir)Application\Libs"
-copy "C:\Program Files (x86)\Progress\Telerik UI for WPF R1 2020\Binaries\WPF45\Telerik.Windows.Controls.Input.dll" "$(SolutionDir)Application\Libs"
-copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Configs"
+    <NMakeReBuildCommandLine>copy "$(SolutionDir)Lib\WaveformDrawingContext\GUIWaveform.config" "$(SolutionDir)Application\Configs"
 copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.dll" "$(SolutionDir)Application\Libs"
 copy "$(SolutionDir)Lib\WaveformDrawingContext\bin\$(Configuration)\GUIWaveform.pdb" "$(SolutionDir)Application\Libs"
 copy "$(SolutionDir)Lib\GlobalPath\bin\$(Configuration)\GlobalPath.dll" "$(SolutionDir)Application\Libs"

@@ -75,10 +75,8 @@ namespace ADCMonitor.View
 
         private void WaveformBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-#if DEBUG
             Debug.WriteLine($"[Border Size W * H]: {e.NewSize.Width} * {e.NewSize.Height}");
             Debug.WriteLine($"[ Image Size W * H]: {waveformImage.ActualWidth} * {waveformImage.ActualHeight}");
-#endif
             
             DrawingConfiguration.MW = e.NewSize.Width;
 

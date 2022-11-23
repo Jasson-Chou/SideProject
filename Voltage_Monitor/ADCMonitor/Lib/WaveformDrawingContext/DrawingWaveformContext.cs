@@ -24,7 +24,37 @@ namespace GUIWaveform
 
         public DrawingConfiguration DrawingConfig { get; }
 
-        private DrawingVisual drawingVisualA, drawingVisualB, drawingVisualC, drawingVisualD, drawingVisualE;
+
+        /// <summary>
+        /// Drawing Voltage Bar
+        /// </summary>
+        private DrawingVisual drawingVisualA;
+
+        /// <summary>
+        /// Drawing Timer Bar
+        /// </summary>
+        private DrawingVisual drawingVisualB;
+
+        /// <summary>
+        /// Drawing Waveform
+        /// </summary>
+        private DrawingVisual drawingVisualC;
+
+        /// <summary>
+        /// Drawing Mouse Cursor
+        /// </summary>
+        private DrawingVisual drawingVisualD;
+
+        /// <summary>
+        /// Drawing Maximum and Minimum Voltage Sign
+        /// </summary>
+        private DrawingVisual drawingVisualE;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private DrawingVisual drawingVisualF;
 
         public void Render(System.Windows.Controls.Image image, ERenderType renderType)
         {
@@ -35,24 +65,25 @@ namespace GUIWaveform
                     RenderA();
                     RenderB();
                     RenderC();
-                    RenderD();
-                    RenderE();
+                    //RenderD();
+                    //RenderE();
                     break;
                 case ERenderType.Horizontal:
                     RenderB();
                     RenderC();
-                    RenderD();
-                    RenderE();
+                    //RenderD();
+                    //RenderE();
                     break;
             }
 
             RenderTargetBitmap bmp = new RenderTargetBitmap((int)DrawingConfig.MW, (int)DrawingConfig.MH, DrawingConfig.xdpi, DrawingConfig.ydpi, PixelFormats.Pbgra32);
-
-            bmp.Render(drawingVisualA); // A
-            bmp.Render(drawingVisualB); // B
-            bmp.Render(drawingVisualC); // C
-            bmp.Render(drawingVisualD); // D
-            bmp.Render(drawingVisualE); // E
+            
+            if (drawingVisualC != null) bmp.Render(drawingVisualC); // C Waveform
+            if (drawingVisualA != null) bmp.Render(drawingVisualA); // A Voltage Bar
+            if(drawingVisualB != null) bmp.Render(drawingVisualB); // B Timebar
+            
+            if (drawingVisualD != null) bmp.Render(drawingVisualD); // D
+            if (drawingVisualE != null) bmp.Render(drawingVisualE); // E
 
             image.Source = bmp;
 
@@ -65,6 +96,8 @@ namespace GUIWaveform
         private void RenderA()
         {
             const double thickness = 0.5;
+            const double textXOffset = -30;
+            const double textYOffset = -8;
             drawingVisualA = new DrawingVisual();
             DrawingContext dc = drawingVisualA.RenderOpen();
             Pen pen = new Pen(new SolidColorBrush(Colors.Black), thickness);
@@ -73,14 +106,26 @@ namespace GUIWaveform
             Point p1 = new Point(DrawingConfig.VBW, DrawingConfig.TBH);
             Point p2 = DrawingConfig.OP;
 
-            dc.DrawLine(pen, p1, p2);
-            
-
-            Point MaxVoltLinePoint = new Point(DrawingConfig.VBW, DrawingConfig.TBH + DrawingConfig.VBL - DrawingConfig.VBS * DrawingConfig.VBL);
+            Point MaxVoltLinePoint = new Point(DrawingConfig.VBW, DrawingConfig.MaxVoltY);
             Point MaxVoltLineLeft = new Point(MaxVoltLinePoint.X - 5, MaxVoltLinePoint.Y);
             Point MaxVoltLineRight = new Point(MaxVoltLinePoint.X + 5, MaxVoltLinePoint.Y);
 
+            Point MinVoltLinePoint = new Point(DrawingConfig.VBW, DrawingConfig.MinVoltY);
+            Point MinVoltLineLeft = new Point(MinVoltLinePoint.X - 5, MinVoltLinePoint.Y);
+            Point MinVoltLineRight = new Point(MinVoltLinePoint.X + 5, MinVoltLinePoint.Y);
+
+            Point MaxVoltTextPoint = new Point(MaxVoltLineLeft.X + textXOffset, MaxVoltLineLeft.Y + textYOffset);
+            Point MinVoltTextPoint = new Point(MinVoltLineLeft.X + textXOffset, MinVoltLineLeft.Y + textYOffset);
+            
+
+            dc.DrawRectangle(new SolidColorBrush(Colors.White), null, new Rect(new Point(0, p1.Y), p2));
+            dc.DrawLine(pen, p1, p2);
             dc.DrawLine(pen, MaxVoltLineLeft, MaxVoltLineRight);
+            dc.DrawLine(pen, MinVoltLineLeft, MinVoltLineRight);
+
+            SolidColorBrush textColor = new SolidColorBrush(Colors.Black);
+            dc.DrawText(GetFormattedText(DrawingConfig.ADCMaxVolt.ToString() + "V", textColor, 12), MaxVoltTextPoint);
+            dc.DrawText(GetFormattedText(DrawingConfig.ADCMinVolt.ToString() + "V", textColor, 12), MinVoltTextPoint);
 
             dc.Close();
         }
@@ -105,14 +150,26 @@ namespace GUIWaveform
             const double timingH = 5.0d;
             double timingTopY = DrawingConfig.OP.Y - (timingH / 2.0d);
             double timingBottomY = timingTopY + timingH;
+
+            double lastTextRightX = double.MinValue;
             for (int adcItemIndex = FPI; adcItemIndex <= LPI; adcItemIndex++)
             {
                 var adcItem = adcItemsSource.FirstOrDefault(item => item.Index == adcItemIndex);
-                if (adcItem == null)
-                    continue;
+                if (adcItem == null) continue;
                 double timingX = adcItem.Index * DrawingConfig.TUP + DrawingConfig.VBW - DrawingConfig.XOffset;
+                
+                var text = $"{adcItemIndex * DrawingConfig.ADCCapturePeriod} ms";
+                var formattedText = GetFormattedText(text, new SolidColorBrush(Colors.Black));
+                var textLeftX = timingX - text.Length / 2 * 4;
+                var textRightX = timingX + text.Length / 2 * 4;
+                if (textRightX > lastTextRightX + 50)
+                {
+                    dc.DrawLine(pen, new Point(timingX, timingTopY), new Point(timingX, timingBottomY));
+                    dc.DrawText(formattedText, new Point(textLeftX, timingBottomY));
+                    lastTextRightX = textRightX;
+                }
+                
 
-                dc.DrawLine(pen, new Point(timingX, timingTopY), new Point(timingX, timingBottomY));
             }
 
             dc.Close();
@@ -137,20 +194,19 @@ namespace GUIWaveform
             for(int adcItemIndex = FPI; adcItemIndex <= LPI; adcItemIndex++)
             {
                 var adcItem = adcItemsSource.FirstOrDefault(item => item.Index == adcItemIndex);
-                if (adcItem == null)
-                    continue;
+                if (adcItem == null) continue;
                 double timingX = adcItem.Index * DrawingConfig.TUP + DrawingConfig.VBW - DrawingConfig.XOffset;
 
-                var point = new Point(timingX, DrawingConfig.OP.Y - adcItem.Value * DrawingConfig.PPB);
+                var point = new Point(timingX, DrawingConfig.MinVoltY - adcItem.Value * DrawingConfig.PPB);
                 drawingPointItemsSource.Add(point);
             }
 
             for(int idx = 0; idx < drawingPointItemsSource.Count; idx++)
             {
+                var nextIndex = idx + 1;
                 var curr = drawingPointItemsSource[idx];
-                var next = drawingPointItemsSource.ElementAtOrDefault(idx + 1);
-                if (next == null)
-                    break;
+                var next = drawingPointItemsSource.ElementAtOrDefault(nextIndex);
+                if (nextIndex == drawingPointItemsSource.Count) break;
                 dc.DrawLine(pen, curr, next);
             }
 
@@ -158,7 +214,7 @@ namespace GUIWaveform
         }
 
         /// <summary>
-        /// Drawing Dynamic Mouse Cursor
+        /// Drawing Mouse Cursor
         /// </summary>
         private void RenderD()
         {
@@ -218,11 +274,13 @@ namespace GUIWaveform
 
             var drawingAdcItems = adcItemsSource.Where(item => item.Index >= FPI && item.Index <= LPI);
 
+            if (drawingAdcItems.Count() == 0) return;// Not Found In Range
+
             var maxValueAdcItem = drawingAdcItems.First(adcItem => adcItem.Value == drawingAdcItems.Max(item => item.Value));
             var minValueAdcItem = drawingAdcItems.First(adcItem => adcItem.Value == drawingAdcItems.Min(item => item.Value));
 
             drawingVisualE = new DrawingVisual();
-            DrawingContext dc = drawingVisualD.RenderOpen();
+            DrawingContext dc = drawingVisualE.RenderOpen();
             const double thickness = 0.5;
             Pen maxPen = new Pen(new SolidColorBrush(Colors.Blue), thickness);
             Pen minPen = new Pen(new SolidColorBrush(Colors.Red), thickness);
@@ -238,13 +296,25 @@ namespace GUIWaveform
             double maxADCVolt = DrawingConfig.ADCToVoltage(maxValueAdcItem.Value);
             double minADCVolt = DrawingConfig.ADCToVoltage(minValueAdcItem.Value);
 
-            dc.DrawText(GetFormattedText($"{maxADCVolt} V", Brushes.Black), maxPoint);
-            dc.DrawText(GetFormattedText($"{minADCVolt} V",Brushes.Black), minPoint);
+            dc.DrawText(GetFormattedText($"{Math.Round(maxADCVolt, 2)} V", Brushes.Black), maxPoint);
+            dc.DrawText(GetFormattedText($"{Math.Round(minADCVolt, 2)} V",Brushes.Black), minPoint);
 
             dc.Close();
         }
 
-        private FormattedText GetFormattedText(string msg, Brush brush, double fontSize = 12.0d)
+        /// <summary>
+        /// Drawing Cursor When Mouse Enter
+        /// </summary>
+        private void RenderF()
+        {
+            bool isMouseEnter = true;
+            Point MousePoint = new Point(0, 0);
+            if (!isMouseEnter) return;
+
+
+        }
+
+        private FormattedText GetFormattedText(string msg, Brush brush, double fontSize = 8.0d)
         {
             return new FormattedText($"{msg}", 
                 new System.Globalization.CultureInfo("en-us"), FlowDirection.LeftToRight,

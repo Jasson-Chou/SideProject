@@ -52,10 +52,7 @@ namespace GUIWaveform
 
         public override string ToString()
         {
-            string result = string.Empty;
-            foreach (var item in this)
-                result += item.ToString() + Environment.NewLine;
-            return result;
+            return string.Join(Environment.NewLine, this.Select(item => item.ToString()));
         }
     }
 }

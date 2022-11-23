@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ADCMonitor.View
@@ -25,9 +24,9 @@ namespace ADCMonitor.View
             InitializeComponent();
         }
 
-        private void MainFrame_Initialized(object sender, EventArgs e)
+        private void mainFrame_Initialized(object sender, EventArgs e)
         {
-            mainFrame.Navigate(new View.ADCMonitorView());
+            mainFrame.Navigate(new ADCMonitorView());
         }
     }
 }

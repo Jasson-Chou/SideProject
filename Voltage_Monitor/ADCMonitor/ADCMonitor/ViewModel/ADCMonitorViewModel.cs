@@ -17,6 +17,20 @@ namespace ADCMonitor.ViewModel
         public ADCMonitorViewModel()
         {
             DrawingWaveformContext = new DrawingWaveformContext();
+
+
+
+            // for testing code
+            var config = DrawingWaveformContext.DrawingConfig;
+            var ADCResolution = config.ADCResolution;
+            var adcItemsSource = config.ADCItemsSource;
+            for (int index = 0; index < 2000; index++)
+            {
+                var randomValue = (ushort)(new Random(Guid.NewGuid().GetHashCode())).Next((int)Math.Pow(2, ADCResolution) - 1);
+                adcItemsSource.Add(new ACDItem(index, randomValue));
+            }
+
+            XOffsetMax = adcItemsSource.Count * config.TUP;
         }
 
         public int XOffset
@@ -26,6 +40,28 @@ namespace ADCMonitor.ViewModel
             {
                 DrawingWaveformContext.DrawingConfig.XOffset = value;
                 OnRender?.Invoke(ERenderType.Horizontal);
+                base.RaisePropertyChanged();
+            }
+        }
+
+        private int xOffsetMax;
+
+        public int XOffsetMax
+        {
+            get { return xOffsetMax; }
+            set { xOffsetMax = value; base.RaisePropertyChanged(); }
+        }
+
+        public int MinTUP => DrawingWaveformContext.DrawingConfig.MinTUP;
+        public int MaxTUP => DrawingWaveformContext.DrawingConfig.MaxTUP;
+
+        public int TUPValue
+        {
+            get => DrawingWaveformContext.DrawingConfig.TUP;
+            set
+            {
+                DrawingWaveformContext.DrawingConfig.TUP = value;
+                OnRender.Invoke(ERenderType.Horizontal);
                 base.RaisePropertyChanged();
             }
         }

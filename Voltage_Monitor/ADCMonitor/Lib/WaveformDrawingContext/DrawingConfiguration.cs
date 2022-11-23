@@ -121,6 +121,16 @@ namespace GUIWaveform
         /// </summary>
         public double MinMW { get; private set; }
 
+        /// <summary>
+        /// Maximum Voltage Point Y Value
+        /// </summary>
+        public double MaxVoltY { get; private set; }
+
+        /// <summary>
+        /// Minimum Voltage Point Y Value
+        /// </summary>
+        public double MinVoltY { get; private set; }
+
 
         /// <summary>
         /// MCU ADC Dectect Maximum Voltage
@@ -137,9 +147,11 @@ namespace GUIWaveform
         /// </summary>
         public ushort ADCResolution { get; set; }
 
+        public int ADCCapturePeriod { get; set; }
+
         internal double ADCToVoltage(ushort adcValue)
         {
-            return (ADCMaxVolt - ADCMinVolt) / (Math.Pow(2, ADCResolution) - 1.0d) * adcValue;
+            return (ADCMaxVolt - ADCMinVolt) / (Math.Pow(2, ADCResolution) - 1.0d) * adcValue + ADCMinVolt;
         }
 
         internal void RefreshData()
@@ -152,34 +164,37 @@ namespace GUIWaveform
             TBL = MW - 2 * VBW;
 
             int fpi = XOffset / TUP;
-            if (ADCItemsSource.Count > fpi)
-                FPI = fpi;
-            else
-                FPI = ADCItemsSource.Count - 1;
+
+            if (ADCItemsSource.Count > fpi) FPI = fpi;
+            else FPI = ADCItemsSource.Count - 1;
 
             int lpi = ((int)TBL + XOffset) / TUP;
-            if (ADCItemsSource.Count > lpi)
-                LPI = lpi;
-            else
-                LPI = ADCItemsSource.Count - 1;
+
+            if (ADCItemsSource.Count > lpi) LPI = lpi;
+            else LPI = ADCItemsSource.Count - 1;
 
             double valueSize = Math.Pow(2, ADCResolution) - 1.0d;
 
             PPB = VBL * VBS / valueSize;
 
-            if (PPB < MinPPB)
-                PPB = MinPPB;
+            if (PPB < MinPPB) PPB = MinPPB;
+
+            var vbltmp = (VBL * (1 - VBS) / 2);
+
+            MaxVoltY = OP.Y - VBL + vbltmp;
+
+            MinVoltY = OP.Y - vbltmp;
 
 
-#if DEBUG
             Debug.WriteLine("----------------Refresh Data---------------");
             Debug.WriteLine($"{nameof(OP)} = {OP}");
             Debug.WriteLine($"{nameof(VBL)} = {VBL}");
             Debug.WriteLine($"{nameof(TBL)} = {TBL}");
             Debug.WriteLine($"{nameof(FPI)} = {FPI}");
             Debug.WriteLine($"{nameof(LPI)} = {LPI}");
+            Debug.WriteLine($"{nameof(MaxVoltY)} = {MaxVoltY}");
+            Debug.WriteLine($"{nameof(MinVoltY)} = {MinVoltY}");
             Debug.WriteLine("-------------------------------------------");
-#endif
         }
 
         
@@ -201,13 +216,12 @@ namespace GUIWaveform
                 ConfigurationManager.SetMCUPropertyItem(nameof(ADCMaxVolt), ADCMaxVolt.ToString());
                 ConfigurationManager.SetMCUPropertyItem(nameof(ADCMinVolt), ADCMinVolt.ToString());
                 ConfigurationManager.SetMCUPropertyItem(nameof(ADCResolution), ADCResolution.ToString());
+                ConfigurationManager.SetMCUPropertyItem(nameof(ADCCapturePeriod), ADCCapturePeriod.ToString());
             }
             catch(Exception ex)
             {
-#if DEBUG
                 Debug.WriteLine(ex.StackTrace);
                 Debug.WriteLine(ex.Message);
-#endif
                 return false;
             }
             RaiseOnUpdateImageMinSize();
@@ -231,6 +245,7 @@ namespace GUIWaveform
                 ADCMaxVolt = double.TryParse(ConfigurationManager.GetMCUPropertyItemValue(nameof(ADCMaxVolt)), out double _ADCMaxVolt) ? _ADCMaxVolt : throw new Exception($"{nameof(ADCMaxVolt)} Parsing Error");
                 ADCMinVolt = double.TryParse(ConfigurationManager.GetMCUPropertyItemValue(nameof(ADCMinVolt)), out double _ADCMinVolt) ? _ADCMinVolt : throw new Exception($"{nameof(ADCMinVolt)} Parsing Error");
                 ADCResolution = ushort.TryParse(ConfigurationManager.GetMCUPropertyItemValue(nameof(ADCResolution)), out ushort _ADCResolution) ? _ADCResolution : throw new Exception($"{nameof(ADCResolution)} Parsing Error");
+                ADCCapturePeriod = int.TryParse(ConfigurationManager.GetMCUPropertyItemValue(nameof(ADCCapturePeriod)), out int _ADCCapturePeriod) ? _ADCCapturePeriod : throw new Exception($"{nameof(ADCCapturePeriod)} Parsing Error");
             }
             catch (Exception ex)
             {
