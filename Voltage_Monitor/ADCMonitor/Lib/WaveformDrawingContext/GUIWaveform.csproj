@@ -49,6 +49,7 @@
     <Compile Include="CursorItem.cs" />
     <Compile Include="DrawingConfiguration.cs" />
     <Compile Include="DrawingWaveformContext.cs" />
+    <Compile Include="MousePoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ADCItem.cs" />
   </ItemGroup>

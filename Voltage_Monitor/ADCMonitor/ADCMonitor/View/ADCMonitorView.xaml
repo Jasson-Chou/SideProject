@@ -23,7 +23,7 @@
                 <ScrollBar Value="{Binding XOffset, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding XOffsetMax}" Minimum="0" Orientation="Horizontal" Grid.Row="0"/>
                 <telerik:RadSlider Value="{Binding TUPValue}" Minimum="{Binding MinTUP}" Maximum="{Binding MaxTUP}" Height="15" Width="150" HorizontalAlignment="Right" telerik:StyleManager.Theme="Crystal" Grid.Row="1"/>
             </Grid>
-            <Border x:Name="waveformBorder" SizeChanged="WaveformBorder_SizeChanged" BorderThickness="0.0" BorderBrush="Gray">
+            <Border x:Name="waveformBorder" MouseEnter="waveformBorder_MouseEnter" MouseLeave="waveformBorder_MouseLeave" MouseMove="waveformBorder_MouseMove" SizeChanged="WaveformBorder_SizeChanged" BorderThickness="0.0" BorderBrush="Gray">
                 <Image x:Name="waveformImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Border>
         </telerik:RadDockPanel>

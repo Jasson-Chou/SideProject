@@ -33,6 +33,7 @@ namespace GUIWaveform
             ADCItemsSource = new ADCItemList();
             CursorItemsSource = new CursorItemList();
             ConfigurationManager = new ConfigurationManager(SystemFolderFileName.GUIWaveformConfiguration);
+            MouseCursor = default;
             Load();
         }
 
@@ -135,19 +136,21 @@ namespace GUIWaveform
         /// <summary>
         /// MCU ADC Dectect Maximum Voltage
         /// </summary>
-        public double ADCMaxVolt { get; set; }
+        public double ADCMaxVolt { get; private set; }
 
         /// <summary>
         /// MCU ADC Dectect Minimum Voltage
         /// </summary>
-        public double ADCMinVolt { get; set; }
+        public double ADCMinVolt { get; private set; }
 
         /// <summary>
         /// MCU ADC Resolution
         /// </summary>
-        public ushort ADCResolution { get; set; }
+        public ushort ADCResolution { get; private set; }
 
-        public int ADCCapturePeriod { get; set; }
+        public int ADCCapturePeriod { get; private set; }
+
+        public MousePoint MouseCursor { get; set; }
 
         internal double ADCToVoltage(ushort adcValue)
         {

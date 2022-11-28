@@ -90,5 +90,25 @@ namespace ADCMonitor.View
         {
             UnsubscriptADCVMEvent();
         }
+
+        private void waveformBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            DrawingConfiguration.MouseCursor = new MousePoint();
+        }
+
+        private void waveformBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            DrawingConfiguration.MouseCursor = default;
+        }
+
+        private void waveformBorder_MouseMove(object sender, MouseEventArgs e)
+        {
+            var cursor = DrawingConfiguration.MouseCursor;
+            if (cursor == default) return;
+            var point = e.GetPosition(sender as Border);
+            cursor.X = point.X;
+            cursor.Y = point.Y;
+            DrawingWaveformContext.Render(waveformImage, DrawingWaveformContext.ERenderType.All);
+        }
     }
 }
