@@ -9,6 +9,7 @@ namespace GUIWaveform
 {
     public class MousePoint
     {
+        public bool Show { get; set; } = false;
         public double X { get; set; } = 0;
         public double Y { get; set; } = 0;
     }

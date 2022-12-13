@@ -17,18 +17,23 @@ namespace GUIWaveform
         {
             All,
             Horizontal,
+            MouseCursor,
         }
         public DrawingWaveformContext()
         {
-            blackPen = new Pen(new SolidColorBrush(Colors.Black), 1.5);
-            blackPen_dash = new Pen(new SolidColorBrush(Colors.Black), 1.5);
+            black_color = new SolidColorBrush(Colors.Black);
+            blue_color = new SolidColorBrush(Colors.Blue);
+            blackPen = new Pen(black_color, 1.5);
+            blackPen_dash = new Pen(black_color, 1.5);
             blackPen_dash.DashStyle = DashStyles.Dash;
-            bluePen = new Pen(new SolidColorBrush(Colors.Blue), 1.5);
-            bluePen_dash = new Pen(new SolidColorBrush(Colors.Blue), 1.5);
+            bluePen = new Pen(blue_color, 1.5);
+            bluePen_dash = new Pen(blue_color, 1.5);
             bluePen_dash.DashStyle = DashStyles.Dash;
 
             DrawingConfig = new DrawingConfiguration();
         }
+
+        public System.Windows.Controls.Image RenderImage { get; set; }
 
         public DrawingConfiguration DrawingConfig { get; }
 
@@ -63,6 +68,8 @@ namespace GUIWaveform
         /// </summary>
         private DrawingVisual drawingVisualF;
 
+        private SolidColorBrush black_color;
+        private SolidColorBrush blue_color;
 
         private readonly Pen blackPen;
         private readonly Pen blackPen_dash;
@@ -71,15 +78,19 @@ namespace GUIWaveform
 
         private RenderTargetBitmap Bitmap;
 
-        public void Render(System.Windows.Controls.Image image, ERenderType renderType)
+        public void Render(ERenderType renderType)
         {
+            var MW = (int)DrawingConfig.MW;
+            var MH = (int)DrawingConfig.MH;
+            if (RenderImage == null || MW <= 0 || MH <= 0) return;
+
             DrawingConfig.RefreshData();
 
-            if (Bitmap == null || Bitmap.PixelWidth != (int)DrawingConfig.MW || Bitmap.PixelHeight != (int)DrawingConfig.MH
+            if (Bitmap == null || Bitmap.PixelWidth != MW || Bitmap.PixelHeight != MH
                 || Bitmap.DpiX != DrawingConfig.xdpi || Bitmap.DpiY != DrawingConfig.ydpi)
             {
-                Bitmap = new RenderTargetBitmap((int)DrawingConfig.MW, (int)DrawingConfig.MH, DrawingConfig.xdpi, DrawingConfig.ydpi, PixelFormats.Pbgra32);
-                image.Source = Bitmap;
+                Bitmap = new RenderTargetBitmap(MW, MH, DrawingConfig.xdpi, DrawingConfig.ydpi, PixelFormats.Pbgra32);
+                RenderImage.Source = Bitmap;
             }
             else
             {
@@ -101,6 +112,9 @@ namespace GUIWaveform
                     RenderB();
                     //RenderD();
                     //RenderE();
+                    RenderF();
+                    break;
+                case ERenderType.MouseCursor:
                     RenderF();
                     break;
             }
@@ -170,6 +184,7 @@ namespace GUIWaveform
             Point p2 = new Point(DrawingConfig.VBW + DrawingConfig.TBL, DrawingConfig.MH - DrawingConfig.TBH);
             dc.DrawLine(blackPen, p1, p2);
 
+            var textColor = new SolidColorBrush(Colors.Black);
             var adcItemsSource = DrawingConfig.ADCItemsSource;
             int FPI = DrawingConfig.FPI;
             int LPI = DrawingConfig.LPI;
@@ -185,7 +200,7 @@ namespace GUIWaveform
                 double timingX = adcItem.Index * DrawingConfig.TUP + DrawingConfig.VBW - DrawingConfig.XOffset;
                 
                 var text = $"{adcItemIndex * DrawingConfig.ADCCapturePeriod} ms";
-                var formattedText = GetFormattedText(text, new SolidColorBrush(Colors.Black), 12);
+                var formattedText = GetFormattedText(text, textColor, 12);
                 var textLeftX = timingX - text.Length / 2 * 4;
                 var textRightX = timingX + text.Length / 2 * 4;
                 if (textRightX > lastTextRightX + 60)
@@ -249,14 +264,14 @@ namespace GUIWaveform
 
             var adcItemsSource = DrawingConfig.ADCItemsSource;
             var cursorItemsSource = DrawingConfig.CursorItemsSource;
-            if (cursorItemsSource.Count == 0) return;
+            if (cursorItemsSource.Count == 0) { dc.Close(); return; }
 
             int FPI = DrawingConfig.FPI;
             int LPI = DrawingConfig.LPI;
 
             var drawingCursorItemsSource = cursorItemsSource.Where(item => item.ADCIndex >= FPI && item.ADCIndex <= LPI);
 
-            if (drawingCursorItemsSource.Count() == 0) return;
+            if (drawingCursorItemsSource.Count() == 0) { dc.Close(); return; }
 
             List<Point> drawingPoint = new List<Point>(drawingCursorItemsSource.Count());
             foreach(var cursorItem in drawingCursorItemsSource)
@@ -334,19 +349,18 @@ namespace GUIWaveform
             Clear(dc);
 
             var config = DrawingConfig;
-            bool isMouseEnter = config.MouseCursor != null;
-            
-            if (!isMouseEnter) return;
+
+            if (!config.MouseCursor.Show) { dc.Close(); return; }
 
             var MP_X = config.MouseCursor.X;
             var MP_Y = config.MouseCursor.Y;
             
-            if (MP_X < config.VBW || MP_X > config.VBW + config.TBL) return;
-            if (MP_Y > config.MinVoltY || MP_Y < config.MaxVoltY) return;
+            if (MP_X < config.VBW || MP_X > config.VBW + config.TBL) { dc.Close(); return; }
+            if (MP_Y > config.MinVoltY || MP_Y < config.MaxVoltY) { dc.Close(); return; }
 
             var targetX = MP_X + config.XOffset - config.VBW;
             var adcIndex = (int)(targetX / config.TUP + (targetX % config.TUP > config.TUP / 2 ? 1 : 0));
-            if (adcIndex >= DrawingConfig.ADCItemsSource.Count) return;
+            if (adcIndex >= DrawingConfig.ADCItemsSource.Count) { dc.Close(); return; }
             var adcItem = DrawingConfig.ADCItemsSource.Single(item => item.Index == adcIndex);
             var drawingX = adcItem.Index * DrawingConfig.TUP + DrawingConfig.VBW - DrawingConfig.XOffset;
             var drawingTopY = config.MaxVoltY - 10;
@@ -358,8 +372,8 @@ namespace GUIWaveform
             var topText = $"{Math.Round(config.ADCToVoltage(adcItem.Value), 3, MidpointRounding.AwayFromZero)} V @ {adcIndex * config.ADCCapturePeriod} ms";
             var leftText = $"{Math.Round(volt, 3, MidpointRounding.AwayFromZero)} V";
 
-            var topTextFormat = GetFormattedText(topText, new SolidColorBrush(Colors.Black), 12);
-            var leftTextFormat = GetFormattedText(leftText, new SolidColorBrush(Colors.Blue), 12);
+            var topTextFormat = GetFormattedText(topText, Brushes.Black, 12);
+            var leftTextFormat = GetFormattedText(leftText, Brushes.Blue, 12);
             
             dc.DrawText(topTextFormat, new Point(drawingX - (topText.Length / 2 * 8.0d), drawingTopY - 10));
             dc.DrawText(leftTextFormat, new Point(DrawingConfig.VBW - 50, MP_Y - 8));

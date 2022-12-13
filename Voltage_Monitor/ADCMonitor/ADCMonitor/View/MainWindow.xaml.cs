@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADCMonitor.View.Monitor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Telerik.Windows.Controls;
 
 namespace ADCMonitor.View
 {
@@ -19,14 +21,31 @@ namespace ADCMonitor.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ADCMonitorView adcMonitorView;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void mainFrame_Initialized(object sender, EventArgs e)
+        private void RadNavigationViewItem_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Navigate(new ADCMonitorView());
+            var content = ((System.Windows.Controls.ContentControl)e.OriginalSource).Content.ToString();
+            switch(content)
+            {
+                case "Monitor":
+                    mainFrame.Navigate(adcMonitorView);
+                    break;
+                default:
+                    RadWindow.Alert("incomplete in this version.");
+                break;
+            }
+            e.Handled = true;
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            adcMonitorView = new ADCMonitorView();
+            mainFrame.Navigate(adcMonitorView);
         }
     }
 }

@@ -17,11 +17,6 @@ namespace GUIWaveform
     public class DrawingConfiguration
     {
 
-        /// <summary>
-        /// Raising Handler When Saving and Loading Event Capture
-        /// </summary>
-        public event OnUpdateImageMinSizeHandler OnUpdateMinImageSize = null;
-
         private ConfigurationManager ConfigurationManager { get; }
 
         public ADCItemList ADCItemsSource { get; }
@@ -33,7 +28,7 @@ namespace GUIWaveform
             ADCItemsSource = new ADCItemList();
             CursorItemsSource = new CursorItemList();
             ConfigurationManager = new ConfigurationManager(SystemFolderFileName.GUIWaveformConfiguration);
-            MouseCursor = default;
+            MouseCursor = new MousePoint();
             Load();
         }
 
@@ -150,7 +145,7 @@ namespace GUIWaveform
 
         public int ADCCapturePeriod { get; private set; }
 
-        public MousePoint MouseCursor { get; set; }
+        public MousePoint MouseCursor { get; }
 
         internal double ADCToVoltage(ushort adcValue)
         {
@@ -227,7 +222,7 @@ namespace GUIWaveform
                 Debug.WriteLine(ex.Message);
                 return false;
             }
-            RaiseOnUpdateImageMinSize();
+            UpdateImageMinSize();
             return true;
         }
 
@@ -258,19 +253,17 @@ namespace GUIWaveform
 #endif
                 return false;
             }
-            RaiseOnUpdateImageMinSize();
+            UpdateImageMinSize();
             return true;
         }
 
-        private void RaiseOnUpdateImageMinSize()
+        private void UpdateImageMinSize()
         {
             double valueSize = Math.Pow(2, ADCResolution) - 1.0d;
 
             MinMH = valueSize * MinPPB / VBS + 2 * TBH;
 
             MinMW = VBW * 2 + MinMH;
-
-            OnUpdateMinImageSize?.Invoke(MinMW, MinMH);
         }
 
         public override string ToString()

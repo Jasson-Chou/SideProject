@@ -3,10 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:local="clr-namespace:ADCMonitor.View"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        mc:Ignorable="d" Initialized="Window_Initialized"
+        Title="MainWindow" MinHeight="600" MinWidth="800">
     <Grid>
-        <Frame x:Name="mainFrame" Initialized="mainFrame_Initialized" />
+        <telerik:RadNavigationView x:Name="navigationView" PaneHeader="RadNavigationView" SelectedIndex="1">
+            <telerik:RadNavigationView.Items>
+                <telerik:RadNavigationViewItem Content="Overview" Click="RadNavigationViewItem_Click"/>
+                <telerik:RadNavigationViewItem Content="Monitor" Click="RadNavigationViewItem_Click"/>
+                <telerik:RadNavigationViewItem Content="Debug" Click="RadNavigationViewItem_Click"/>
+            </telerik:RadNavigationView.Items>
+            <telerik:RadNavigationView.Content>
+                <Frame x:Name="mainFrame"/>
+            </telerik:RadNavigationView.Content>
+        </telerik:RadNavigationView>
     </Grid>
 </Window>

@@ -6,8 +6,12 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.SplashScreen;
+using Telerik.Windows.Input.Touch;
 
 namespace ADCMonitor
 {
@@ -59,6 +63,27 @@ namespace ADCMonitor
                     return null;
                 }
             };
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var dataContext = (SplashScreenDataContext)RadSplashScreenManager.SplashScreenDataContext;
+            //dataContext.ImagePath = "";
+            dataContext.Content = "Loading Application";
+            dataContext.Footer = "This is the footer.";
+
+            RadSplashScreenManager.Show();
+
+            Thread.Sleep(500);
+
+            RadSplashScreenManager.Close();
+
+            TouchManager.IsTouchEnabled = false;
+            TouchManager.IsEnabled = false;
+
+            StyleManager.ApplicationTheme = new Windows11Theme(Windows11Palette.ColorVariation.Light);
+
+            base.OnStartup(e);
         }
     }
 }
