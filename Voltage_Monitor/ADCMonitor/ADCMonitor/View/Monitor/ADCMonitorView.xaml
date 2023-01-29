@@ -4,6 +4,7 @@
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                 xmlns:local="clr-namespace:ADCMonitor.View.Monitor"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 DataContext="{Binding ADCMonitorVM, Source={StaticResource Locator}}"
                 Initialized="Page_Initialized"
       >
@@ -32,7 +33,7 @@
             <telerik:RadDocking.DocumentHost>
                 <telerik:RadSplitContainer>
                     <telerik:RadPaneGroup>
-                        <telerik:RadPane Header="Waveform" CanUserClose="False" telerik:RadDocking.FloatingSize="800 600">
+                        <telerik:RadPane Header="Waveform" CanUserClose="False" telerik:RadDocking.FloatingSize="800 600" telerik:DockingPanel.InitialSize="500, 500">
                             <telerik:RadDockPanel Grid.Row="2">
                                 <Grid telerik:RadDockPanel.Dock="Bottom">
                                     <Grid.RowDefinitions>
@@ -49,7 +50,9 @@
                                         SizeChanged="WaveformBorder_SizeChanged"
                                         MinWidth="{Binding ImageWidthMinimum}" MinHeight="{Binding ImageHeightMinimum}"
                                         BorderThickness="0.0" BorderBrush="Gray">
-                                    <Image x:Name="waveformImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    <Image x:Name="waveformImage" 
+                                           HorizontalAlignment="Stretch" 
+                                           VerticalAlignment="Stretch"/>
                                 </Border>
                             </telerik:RadDockPanel>
                         </telerik:RadPane>
@@ -57,14 +60,18 @@
                 </telerik:RadSplitContainer>
             </telerik:RadDocking.DocumentHost>
 
-            <telerik:RadSplitContainer InitialPosition="DockedRight">
-                <telerik:RadPaneGroup>
+            <telerik:RadSplitContainer InitialPosition="DockedRight" Orientation="Vertical" telerik:RadDocking.FloatingSize="800 600" telerik:DockingPanel.InitialSize="500, 500">
+                <telerik:RadPaneGroup telerik:ProportionalStackPanel.RelativeSize="200, 200">
                     <telerik:RadPane Header="Waveform Property" CanUserClose="False" telerik:RadDocking.FloatingSize="400 600">
                         <local:WaveformPropertyGrid_UserControl />
                     </telerik:RadPane>
                 </telerik:RadPaneGroup>
+                <telerik:RadPaneGroup telerik:ProportionalStackPanel.RelativeSize="200, 250">
+                    <telerik:RadPane Header="ADC Values" CanUserClose="False" telerik:RadDocking.FloatingSize="400 600">
+                        <local:ADCValues_UserControl />
+                    </telerik:RadPane>
+                </telerik:RadPaneGroup>
             </telerik:RadSplitContainer>
-
         </telerik:RadDocking>
     </Grid>
 </Page>

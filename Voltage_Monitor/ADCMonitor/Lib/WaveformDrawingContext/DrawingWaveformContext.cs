@@ -366,7 +366,7 @@ namespace GUIWaveform
             var drawingTopY = config.MaxVoltY - 10;
             
             var mouseHeight = Math.Abs(MP_Y - config.MinVoltY);
-            var volt = config.ADCToVoltage((ushort)(mouseHeight / config.PPB));
+            var volt = config.ADCToVoltage((ushort)(mouseHeight / config.PPB + 1));
             
             
             var topText = $"{Math.Round(config.ADCToVoltage(adcItem.Value), 3, MidpointRounding.AwayFromZero)} V @ {adcIndex * config.ADCCapturePeriod} ms";

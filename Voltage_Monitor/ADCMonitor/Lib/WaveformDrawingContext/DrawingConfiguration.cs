@@ -19,13 +19,13 @@ namespace GUIWaveform
 
         private ConfigurationManager ConfigurationManager { get; }
 
-        public ADCItemList ADCItemsSource { get; }
+        public ADCItemCollection ADCItemsSource { get; }
 
         public CursorItemList CursorItemsSource { get; }
 
         public DrawingConfiguration()
         {
-            ADCItemsSource = new ADCItemList();
+            ADCItemsSource = new ADCItemCollection();
             CursorItemsSource = new CursorItemList();
             ConfigurationManager = new ConfigurationManager(SystemFolderFileName.GUIWaveformConfiguration);
             MouseCursor = new MousePoint();
@@ -147,7 +147,7 @@ namespace GUIWaveform
 
         public MousePoint MouseCursor { get; }
 
-        internal double ADCToVoltage(ushort adcValue)
+        public double ADCToVoltage(ushort adcValue)
         {
             return (ADCMaxVolt - ADCMinVolt) / (Math.Pow(2, ADCResolution) - 1.0d) * adcValue + ADCMinVolt;
         }

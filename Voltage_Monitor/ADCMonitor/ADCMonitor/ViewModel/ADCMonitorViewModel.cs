@@ -1,5 +1,6 @@
 ﻿using ADCMonitor.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using GUIWaveform;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using static GUIWaveform.DrawingWaveformContext;
 namespace ADCMonitor.ViewModel
 {
     public delegate void OnRenderHandler(ERenderType eRenderType);
-    public class ADCMonitorViewModel:ViewModelBase
+    public class ADCMonitorViewModel : ViewModelBase
     {
         public ADCMonitorViewModel()
         {
@@ -52,9 +53,15 @@ namespace ADCMonitor.ViewModel
             }
         }
 
-        public double ImageWidthMinimum => DrawingWaveformServiceModel.Instance.ImageMinimumSize.Width;  
-        
+        public double ImageWidthMinimum => DrawingWaveformServiceModel.Instance.ImageMinimumSize.Width;
+
         public double ImageHeightMinimum => DrawingWaveformServiceModel.Instance.ImageMinimumSize.Height;
+
+        public RelayCommand RefreshCommand => new RelayCommand(() =>
+        {
+            var Instance = DrawingWaveformServiceModel.Instance;
+            Instance.ImageRender(ERenderType.All);
+        });
     }
 
     public static class DrawingWaveformServiceExtension
@@ -67,7 +74,7 @@ namespace ADCMonitor.ViewModel
             for (int index = 0; index < 2000; index++)
             {
                 var randomValue = (ushort)(new Random(Guid.NewGuid().GetHashCode())).Next((int)Math.Pow(2, ADCResolution) - 1);
-                adcItemsSource.Add(new ACDItem(index, randomValue));
+                adcItemsSource.Add(new ADCItem(index, randomValue));
             }
         }
     }

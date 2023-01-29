@@ -33,6 +33,7 @@ namespace ADCMonitor.View.Monitor
             switch (displayName)
             {
                 case "IsInDesignMode": e.Cancel = true; break;
+                case "RefreshCommand": e.Cancel = true; break;
             }
         }
     }
