@@ -26,12 +26,10 @@ namespace ADCMonitor.View.Monitor
     /// </summary>
     public partial class ADCMonitorView
     {
-        private DrawingWaveformServiceModel Instance => DrawingWaveformServiceModel.Instance;
-
         public ADCMonitorView()
         {
             InitializeComponent();
-            Instance.DrawingImage = this.waveformImage;
+            ((App)(App.Current)).WaveformServiceModel.DrawingImage = this.waveformImage;
         }
 
         private void Page_Initialized(object sender, EventArgs e)
@@ -43,29 +41,29 @@ namespace ADCMonitor.View.Monitor
         {
             System.Diagnostics.Debug.WriteLine($"[Border Size W * H]: {e.NewSize.Width} * {e.NewSize.Height}");
             System.Diagnostics.Debug.WriteLine($"[ Image Size W * H]: {waveformImage.ActualWidth} * {waveformImage.ActualHeight}");
-            
-            Instance.ImageRender(e.NewSize);
+
+            ((App)(App.Current)).WaveformServiceModel.ImageRender(e.NewSize);
         }
 
         public void Close()
         {
-            Instance.DrawingImage = null;
+            ((App)(App.Current)).WaveformServiceModel.DrawingImage = null;
         }
 
         private void waveformBorder_MouseEnter(object sender, MouseEventArgs e)
         {
-            Instance.ShowMouseCursor = true;
+            ((App)(App.Current)).WaveformServiceModel.ShowMouseCursor = true;
         }
 
         private void waveformBorder_MouseLeave(object sender, MouseEventArgs e)
         {
-            Instance.ShowMouseCursor = false;
+            ((App)(App.Current)).WaveformServiceModel.ShowMouseCursor = false;
         }
 
         private void waveformBorder_MouseMove(object sender, MouseEventArgs e)
         {
             var point = e.GetPosition(sender as Border);
-            Instance.ImageRender(point);
+            ((App)(App.Current)).WaveformServiceModel.ImageRender(point);
         }
 
     }

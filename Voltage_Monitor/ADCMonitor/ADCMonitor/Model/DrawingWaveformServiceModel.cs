@@ -12,14 +12,7 @@ namespace ADCMonitor.Model
 {
     public class DrawingWaveformServiceModel
     {
-        public static DrawingWaveformServiceModel Instance { get; }
-
-        static DrawingWaveformServiceModel()
-        {
-            Instance = new DrawingWaveformServiceModel();
-        }
-
-        private DrawingWaveformServiceModel()
+        public DrawingWaveformServiceModel()
         {
             context = new DrawingWaveformContext();
         }

@@ -106,6 +106,12 @@
     <Compile Include="ViewModel\ADCMonitorViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Debug\DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Debug\Monitor\Monitor_UserControl.xaml.cs">
+      <DependentUpon>Monitor_UserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Monitor\ADCMonitorView.xaml.cs">
       <DependentUpon>ADCMonitorView.xaml</DependentUpon>
     </Compile>
@@ -113,16 +119,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\Debug\DebugView.xaml.cs">
-      <DependentUpon>DebugView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Monitor\ADCValues_UserControl.xaml.cs">
+    <Compile Include="View\Debug\Monitor\ADCValues_UserControl.xaml.cs">
       <DependentUpon>ADCValues_UserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Monitor\WaveformPropertyGrid_UserControl.xaml.cs">
+    <Compile Include="View\Debug\Monitor\WaveformPropertyGrid_UserControl.xaml.cs">
       <DependentUpon>WaveformPropertyGrid_UserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\System.Windows.xaml">
@@ -137,11 +140,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Monitor\ADCMonitorView.xaml">
+    <Page Include="View\Debug\DebugWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Debug\DebugView.xaml">
+    <Page Include="View\Debug\Monitor\Monitor_UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Monitor\ADCMonitorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -149,11 +156,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Monitor\ADCValues_UserControl.xaml">
+    <Page Include="View\Debug\Monitor\ADCValues_UserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Monitor\WaveformPropertyGrid_UserControl.xaml">
+    <Page Include="View\Debug\Monitor\WaveformPropertyGrid_UserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

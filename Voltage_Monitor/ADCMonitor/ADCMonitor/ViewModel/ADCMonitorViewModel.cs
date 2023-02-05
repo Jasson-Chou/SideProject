@@ -16,36 +16,35 @@ namespace ADCMonitor.ViewModel
     {
         public ADCMonitorViewModel()
         {
-            var Instance = DrawingWaveformServiceModel.Instance;
-            Instance.GenerateData();
+            ((App)(App.Current)).WaveformServiceModel.GenerateData();
         }
 
         public int HornizontalMaximum
         {
-            get => DrawingWaveformServiceModel.Instance.HornizontalMaximum;
+            get => ((App)(App.Current)).WaveformServiceModel.HornizontalMaximum;
         }
 
         public int HornizontalOffset
         {
-            get { return DrawingWaveformServiceModel.Instance.HornizontalOffset; }
+            get { return ((App)(App.Current)).WaveformServiceModel.HornizontalOffset; }
             set
             {
-                var Instance = DrawingWaveformServiceModel.Instance;
+                var Instance = ((App)(App.Current)).WaveformServiceModel;
                 Instance.HornizontalOffset = value;
                 Instance.ImageRender(ERenderType.Horizontal);
                 base.RaisePropertyChanged();
             }
         }
 
-        public int MinTUP => DrawingWaveformServiceModel.Instance.TimingUnitPixelMinimum;
-        public int MaxTUP => DrawingWaveformServiceModel.Instance.TimingUnitPixelMaximum;
+        public int MinTUP => ((App)(App.Current)).WaveformServiceModel.TimingUnitPixelMinimum;
+        public int MaxTUP => ((App)(App.Current)).WaveformServiceModel.TimingUnitPixelMaximum;
 
         public int TUPValue
         {
-            get => DrawingWaveformServiceModel.Instance.TimingUnitPixel;
+            get => ((App)(App.Current)).WaveformServiceModel.TimingUnitPixel;
             set
             {
-                var Instance = DrawingWaveformServiceModel.Instance;
+                var Instance = ((App)(App.Current)).WaveformServiceModel;
                 Instance.TimingUnitPixel = value;
                 Instance.ImageRender(ERenderType.All);
                 base.RaisePropertyChanged();
@@ -53,14 +52,13 @@ namespace ADCMonitor.ViewModel
             }
         }
 
-        public double ImageWidthMinimum => DrawingWaveformServiceModel.Instance.ImageMinimumSize.Width;
+        public double ImageWidthMinimum => ((App)(App.Current)).WaveformServiceModel.ImageMinimumSize.Width;
 
-        public double ImageHeightMinimum => DrawingWaveformServiceModel.Instance.ImageMinimumSize.Height;
+        public double ImageHeightMinimum => ((App)(App.Current)).WaveformServiceModel.ImageMinimumSize.Height;
 
         public RelayCommand RefreshCommand => new RelayCommand(() =>
         {
-            var Instance = DrawingWaveformServiceModel.Instance;
-            Instance.ImageRender(ERenderType.All);
+            ((App)(App.Current)).WaveformServiceModel.ImageRender(ERenderType.All);
         });
     }
 

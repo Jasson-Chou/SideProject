@@ -1,3 +1,4 @@
+using ADCMonitor.View.Debug;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GUIWaveform;
@@ -41,5 +42,16 @@ namespace ADCMonitor.ViewModel
             Debug.WriteLine(drawingWaveformContext.DrawingConfig.ToString());
 #endif
         });
+
+        private DebugWindow window = null;
+        public RelayCommand DebugWindowRelayCommand => new RelayCommand(() =>
+        {
+            if(window == null)
+                window = new DebugWindow();
+            if (window != null && !window.IsOpen)
+                window.Show();
+            else if (window != null && window.IsOpen)
+                window.Focus();
+        }, () => ((App)App.Current).DebugEnabled);
     }
 }

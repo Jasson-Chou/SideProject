@@ -1,4 +1,6 @@
-﻿using GlobalPath;
+﻿using ADCMonitor.Model;
+using ADCMonitor.View;
+using GlobalPath;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.Docking;
 using Telerik.Windows.Controls.SplashScreen;
 using Telerik.Windows.Input.Touch;
 
@@ -20,10 +23,16 @@ namespace ADCMonitor
     /// </summary>
     public partial class App : Application
     {
+
+        public DrawingWaveformServiceModel WaveformServiceModel { get; private set; }
+
+        public bool DebugEnabled { get; private set; }
+
         public App()
         {
             InitializeAssemblyFiles();
         }
+
         private void InitializeAssemblyFiles()
         {
             AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>
@@ -74,7 +83,7 @@ namespace ADCMonitor
 
             RadSplashScreenManager.Show();
 
-            Thread.Sleep(500);
+            WaveformServiceModel = new DrawingWaveformServiceModel();
 
             RadSplashScreenManager.Close();
 
@@ -84,6 +93,19 @@ namespace ADCMonitor
             StyleManager.ApplicationTheme = new Windows11Theme(Windows11Palette.ColorVariation.Light);
 
             base.OnStartup(e);
+
+            ArgumentsHandler(e.Args);
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MainWindow = new MainWindow();
+            MainWindow.Show();
+        }
+
+        private void ArgumentsHandler(string[] args)
+        {
+            if (args.Contains("--debug")) DebugEnabled = true;
         }
     }
 }

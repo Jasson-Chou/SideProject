@@ -7,6 +7,9 @@
         xmlns:local="clr-namespace:ADCMonitor.View"
         mc:Ignorable="d" Initialized="Window_Initialized"
         Title="MainWindow" MinHeight="600" MinWidth="800">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding Path=Main.DebugWindowRelayCommand, Source={StaticResource Locator}}" Gesture="Ctrl+Alt+D"/>
+    </Window.InputBindings>
     <Grid>
         <telerik:RadNavigationView x:Name="navigationView" PaneHeader="RadNavigationView" IsPaneOpen="False"  SelectedIndex="1">
             <telerik:RadNavigationView.Items>

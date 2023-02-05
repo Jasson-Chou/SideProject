@@ -233,7 +233,7 @@ namespace GUIWaveform
 
             for(int adcItemIndex = FPI; adcItemIndex <= LPI; adcItemIndex++)
             {
-                var adcItem = adcItemsSource.FirstOrDefault(item => item.Index == adcItemIndex);
+                var adcItem = adcItemsSource[adcItemIndex];
                 if (adcItem == null) continue;
                 double timingX = adcItem.Index * DrawingConfig.TUP + DrawingConfig.VBW - DrawingConfig.XOffset;
 
