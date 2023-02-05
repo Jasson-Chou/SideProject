@@ -1,0 +1,15 @@
+﻿<telerik:RadWindow x:Class="ADCMonitor.View.Debug.DebugWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:monitor="clr-namespace:ADCMonitor.View.Debug.Monitor"
+        Header="DebugWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen"
+                >
+    <Grid>
+        <telerik:RadTabControl>
+            <telerik:RadTabItem Header="ADC Monitor">
+                <monitor:Monitor_UserControl />
+            </telerik:RadTabItem>
+        </telerik:RadTabControl>
+    </Grid>
+</telerik:RadWindow>
